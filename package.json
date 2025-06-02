@@ -60,6 +60,9 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-4040520250104002",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4040520250104002",
     "@vueuse/core": "^12.4.0",
+    "highlight.js": "^11.11.1",
+    "marked-highlight": "^2.2.1",
+    "node-html-parser": "^7.0.1",
     "vue": "~3.5.0",
     "vue-i18n": "^9.14.2"
   },
@@ -88,6 +91,8 @@
     "eslint": "^9.18.0",
     "lint-staged": "^15.3.0",
     "miniprogram-api-typings": "^4.0.4",
+    "sass": "^1.89.1",
+    "sass-embedded": "^1.89.1",
     "simple-git-hooks": "^2.11.1",
     "typescript": "~5.7.3",
     "unocss": "^65.4.0",

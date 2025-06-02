@@ -11,5 +11,6 @@ declare module 'vue' {
     AppLogos: typeof import('./components/AppLogos.vue')['default']
     HiCounter: typeof import('./components/HiCounter.vue')['default']
     InputEntry: typeof import('./components/InputEntry.vue')['default']
+    MarkedParserMarkedParser: typeof import('./components/MarkedParser/MarkedParser.vue')['default']
   }
 }
