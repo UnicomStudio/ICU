@@ -21,6 +21,7 @@ declare global {
   const createGlobalState: typeof import('@vueuse/core')['createGlobalState']
   const createInjectionState: typeof import('@vueuse/core')['createInjectionState']
   const createReactiveFn: typeof import('@vueuse/core')['createReactiveFn']
+  const createRef: typeof import('@vueuse/core')['createRef']
   const createReusableTemplate: typeof import('@vueuse/core')['createReusableTemplate']
   const createSharedComposable: typeof import('@vueuse/core')['createSharedComposable']
   const createTemplatePromise: typeof import('@vueuse/core')['createTemplatePromise']
@@ -33,8 +34,12 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const getCaptcha: typeof import('./utils/sys')['getCaptcha']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const getIsTabbar: typeof import('./utils/pages')['getIsTabbar']
+  const getLastPage: typeof import('./utils/pages')['getLastPage']
+  const getWindowInfo: typeof import('./utils/uni')['getWindowInfo']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
@@ -44,6 +49,8 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const isTableBar: typeof import('./utils/pages')['isTableBar']
+  const login: typeof import('./utils/sys')['login']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
@@ -109,11 +116,14 @@ declare global {
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
+  const sendCode: typeof import('./utils/sys')['sendCode']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
+  const stores: typeof import('./stores/index')['default']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
+  const tabBarList: typeof import('./utils/pages')['tabBarList']
   const templateRef: typeof import('@vueuse/core')['templateRef']
   const throttledRef: typeof import('@vueuse/core')['throttledRef']
   const throttledWatch: typeof import('@vueuse/core')['throttledWatch']
@@ -161,6 +171,7 @@ declare global {
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCount: typeof import('./composables/useCount')['useCount']
+  const useCountdown: typeof import('@vueuse/core')['useCountdown']
   const useCounter: typeof import('@vueuse/core')['useCounter']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVar: typeof import('@vueuse/core')['useCssVar']
@@ -195,6 +206,7 @@ declare global {
   const useFileSystemAccess: typeof import('@vueuse/core')['useFileSystemAccess']
   const useFocus: typeof import('@vueuse/core')['useFocus']
   const useFocusWithin: typeof import('@vueuse/core')['useFocusWithin']
+  const useFocuswitchin: typeof import('@vueuse/core')['useFocuswitchin']
   const useFps: typeof import('@vueuse/core')['useFps']
   const useFullscreen: typeof import('@vueuse/core')['useFullscreen']
   const useGamepad: typeof import('@vueuse/core')['useGamepad']
@@ -221,6 +233,7 @@ declare global {
   const useMouseInElement: typeof import('@vueuse/core')['useMouseInElement']
   const useMousePressed: typeof import('@vueuse/core')['useMousePressed']
   const useMutationObserver: typeof import('@vueuse/core')['useMutationObserver']
+  const useNavigate: typeof import('./composables/useNavigate')['useNavigate']
   const useNavigatorLanguage: typeof import('@vueuse/core')['useNavigatorLanguage']
   const useNetwork: typeof import('@vueuse/core')['useNetwork']
   const useNow: typeof import('@vueuse/core')['useNow']
@@ -264,6 +277,7 @@ declare global {
   const useStyleTag: typeof import('@vueuse/core')['useStyleTag']
   const useSupported: typeof import('@vueuse/core')['useSupported']
   const useSwipe: typeof import('@vueuse/core')['useSwipe']
+  const useTabbarStore: typeof import('./stores/tabbar')['useTabbarStore']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
   const useTemplateRefsList: typeof import('@vueuse/core')['useTemplateRefsList']
   const useTextDirection: typeof import('@vueuse/core')['useTextDirection']
@@ -284,6 +298,7 @@ declare global {
   const useToggle: typeof import('@vueuse/core')['useToggle']
   const useTransition: typeof import('@vueuse/core')['useTransition']
   const useUrlSearchParams: typeof import('@vueuse/core')['useUrlSearchParams']
+  const useUserInfoStore: typeof import('./stores/userInfo')['useUserInfoStore']
   const useUserMedia: typeof import('@vueuse/core')['useUserMedia']
   const useVModel: typeof import('@vueuse/core')['useVModel']
   const useVModels: typeof import('@vueuse/core')['useVModels']
@@ -319,6 +334,9 @@ declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { IUserInfo } from './utils/sys'
+  import('./utils/sys')
 }
 
 // for vue template auto import
@@ -353,8 +371,12 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly getCaptcha: UnwrapRef<typeof import('./utils/sys')['getCaptcha']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly getIsTabbar: UnwrapRef<typeof import('./utils/pages')['getIsTabbar']>
+    readonly getLastPage: UnwrapRef<typeof import('./utils/pages')['getLastPage']>
+    readonly getWindowInfo: UnwrapRef<typeof import('./utils/uni')['getWindowInfo']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -364,6 +386,8 @@ declare module 'vue' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isTableBar: UnwrapRef<typeof import('./utils/pages')['isTableBar']>
+    readonly login: UnwrapRef<typeof import('./utils/sys')['login']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
@@ -429,11 +453,14 @@ declare module 'vue' {
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
+    readonly sendCode: UnwrapRef<typeof import('./utils/sys')['sendCode']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly stores: UnwrapRef<typeof import('./stores/index')['default']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
+    readonly tabBarList: UnwrapRef<typeof import('./utils/pages')['tabBarList']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
@@ -541,6 +568,7 @@ declare module 'vue' {
     readonly useMouseInElement: UnwrapRef<typeof import('@vueuse/core')['useMouseInElement']>
     readonly useMousePressed: UnwrapRef<typeof import('@vueuse/core')['useMousePressed']>
     readonly useMutationObserver: UnwrapRef<typeof import('@vueuse/core')['useMutationObserver']>
+    readonly useNavigate: UnwrapRef<typeof import('./composables/useNavigate')['useNavigate']>
     readonly useNavigatorLanguage: UnwrapRef<typeof import('@vueuse/core')['useNavigatorLanguage']>
     readonly useNetwork: UnwrapRef<typeof import('@vueuse/core')['useNetwork']>
     readonly useNow: UnwrapRef<typeof import('@vueuse/core')['useNow']>
@@ -584,6 +612,7 @@ declare module 'vue' {
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
+    readonly useTabbarStore: UnwrapRef<typeof import('./stores/tabbar')['useTabbarStore']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
@@ -604,6 +633,7 @@ declare module 'vue' {
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
+    readonly useUserInfoStore: UnwrapRef<typeof import('./stores/userInfo')['useUserInfoStore']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
     readonly useVModel: UnwrapRef<typeof import('@vueuse/core')['useVModel']>
     readonly useVModels: UnwrapRef<typeof import('@vueuse/core')['useVModels']>

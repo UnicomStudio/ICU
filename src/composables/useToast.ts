@@ -47,6 +47,5 @@ export function useToast(options: ToastOptions) {
   }
   catch (error) {
     console.error('调用Toast失败:', error)
-    options.fail?.()
   }
 }

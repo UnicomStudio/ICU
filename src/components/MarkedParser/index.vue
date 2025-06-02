@@ -76,9 +76,9 @@ const marked = new Marked(
         // 显示代码语言及复制按钮，复制按钮绑定 code-data-index 方便查找对应代码
         codeHTML += `<span style="color:#e6c07b;margin-left: 8px; flex: 1;">${lang}</span><a class="copy-btn" code-data-index="${copyCodeData.length - 1}" style="margin-right: 8px;">复制代码</a>`
         codeHTML += `</div>`
-        codeHTML += `<pre class="hljs" style="padding:10px 8px 0;margin-bottom:5px;overflow: auto;display: block; border-radius: 0 0 6px 6px;"><code class="hljs language-${lang}">${html}</code></pre>`
+        codeHTML += `<pre class="hljs" style="word-wrap: break-word;white-space: pre-wrap;width:auto;padding:10px 8px 0;margin-bottom:5px;overflow: auto;display: block; border-radius: 0 0 6px 6px;"><code class="hljs language-${lang}">${html}</code></pre>`
         // #else
-        codeHTML += `<pre class="hljs" style="padding:10px 8px 0;margin-bottom:5px;overflow: auto;display: block; border-radius: 6px;"><code class="hljs language-${lang}">${html}</code></pre>`
+        codeHTML += `<pre class="hljs" style="word-wrap: break-word;white-space: pre-wrap;width:auto;padding:10px 8px 0;margin-bottom:5px;overflow: auto;display: block; border-radius: 6px;"><code class="hljs language-${lang}">${html}</code></pre>`
         // #endif
         codeHTML += '</div>'
 

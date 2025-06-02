@@ -54,6 +54,21 @@
     "vite.config.*": "pages.config.*, manifest.config.*, uno.config.*, volar.config.*, *.env, .env.*"
   },
   "cSpell.words": [
-    "WEIXIN"
+    "Attributify",
+    "easterNday",
+    "easycom",
+    "iconfont",
+    "iconify",
+    "Pixelify",
+    "popout",
+    "qrcode",
+    "sinaweibo",
+    "uniapp",
+    "unocss",
+    "VITE",
+    "vueuse",
+    "wechat",
+    "WEIXIN",
+    "YuanJing"
   ]
 }

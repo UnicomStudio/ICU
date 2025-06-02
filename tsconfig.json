@@ -1,6 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
     "paths": {
@@ -10,8 +11,10 @@
       "@dcloudio/types",
       "@mini-types/alipay",
       "miniprogram-api-typings",
-      "@uni-helper/uni-types"
+      "@uni-helper/uni-types",
+      "sard-uniapp/global"
     ],
+    "allowJs": true,
     "sourceMap": true
   },
   "vueCompilerOptions": {

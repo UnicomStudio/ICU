@@ -1,13 +1,23 @@
 {
+  "easycom": {
+    "custom": {
+      "^sar-(.*)": "sard-uniapp/components/$1/$1.vue"
+    }
+  },
   "pages": [
     {
-      "path": "pages/index",
+      "path": "pages/login",
       "type": "home"
     },
     {
-      "path": "pages/hi",
+      "path": "pages/chat/index",
       "type": "page",
-      "layout": "home"
+      "layout": "tabbar"
+    },
+    {
+      "path": "pages/settings/index",
+      "type": "page",
+      "layout": "tabbar"
     }
   ],
   "globalStyle": {
@@ -17,8 +27,32 @@
     "backgroundTextStyle": "@bgTxtStyle",
     "navigationBarBackgroundColor": "#000000",
     "navigationBarTextStyle": "@navTxtStyle",
-    "navigationBarTitleText": "Vitesse-Uni",
+    "navigationBarTitleText": "联通元景",
     "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "backgroundColor": "@tabBgColor",
+    "borderStyle": "@tabBorderStyle",
+    "color": "@tabFontColor",
+    "selectedColor": "@tabSelectedColor",
+    "list": [
+      {
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/homeHL.png",
+        "pagePath": "pages/chat/index",
+        "text": "对话",
+        "icon": "i-carbon-chat",
+        "iconType": "unocss"
+      },
+      {
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/homeHL.png",
+        "pagePath": "pages/settings/index",
+        "text": "设置",
+        "icon": "i-carbon-settings",
+        "iconType": "unocss"
+      }
+    ]
   },
   "__esModule": true,
   "subPackages": []

@@ -1,6 +1,6 @@
 {
-  "name": "vitesse-uni-app",
-  "appid": "",
+  "name": "联通元景",
+  "appid": "__UNI__FA0394A",
   "description": "",
   "versionName": "1.0.0",
   "versionCode": "100",
@@ -42,7 +42,7 @@
   },
   "quickapp": {},
   "mp-weixin": {
-    "appid": "",
+    "appid": "wx28474a99e40115df",
     "setting": {
       "urlCheck": false
     },
@@ -51,7 +51,8 @@
     "themeLocation": "theme.json"
   },
   "mp-alipay": {
-    "usingComponents": true
+    "usingComponents": true,
+    "styleIsolation": "shared"
   },
   "mp-baidu": {
     "usingComponents": true
