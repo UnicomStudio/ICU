@@ -33,6 +33,7 @@ function decodeUsingURIComponent(data: ArrayBuffer) {
 
 export class YuanJingAI {
   private instance: ReturnType<typeof un.create>
+  private apiKey: string
 
   constructor(config: {
     baseUrl: string
@@ -40,6 +41,7 @@ export class YuanJingAI {
     defaultHeaders?: Record<string, string>
     apiKey: string
   }) {
+    this.apiKey = config.apiKey
     this.instance = un.create({
       baseUrl: config.baseUrl,
       timeout: config.timeout || 1000,
@@ -68,6 +70,19 @@ export class YuanJingAI {
       onHeadersReceived,
       onChunkReceived,
       signal,
+    })
+    // #endif
+
+    // #ifdef H5 || APP-PLUS
+    fetch('<请求地址>', {
+      method: 'POST', // 请求方法
+      headers: {
+        'Content-Type': 'application/json', // 请求头
+        'Authorization': `Bearer ${this.apiKey}`, // 校验令牌，根据自己的服务器需求传
+      },
+      body: JSON.stringify(config),
+    }).then(async (result) => {
+      onChunkReceived({ data: await result.arrayBuffer() })
     })
     // #endif
   }
