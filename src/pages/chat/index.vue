@@ -13,17 +13,27 @@ const chatList = ref<ChatMessage[]>([])
 const conversationId = ref('')
 const loading = ref(false)
 const paging = ref(null)
-const controller = new AbortController()
-const signal = controller.signal
+const controller = ref<AbortController>(new AbortController())
+const signal = ref(controller.value.signal)
 
-async function send(content: string) {
-  loading.value = true
+function send(question: string) {
+  console.warn('send', question, chatList.value)
+  if (loading.value) {
+    return
+  }
   paging.value.addChatRecordData({
+    id: UUID(),
     role: 'user',
-    content,
+    content: question,
   })
 
+  answer(question)
+}
+
+async function answer(content: string) {
+  loading.value = true
   paging.value.addChatRecordData({
+    id: UUID(),
     role: 'assistant',
     content: '',
   })
@@ -47,10 +57,12 @@ async function send(content: string) {
     })
     conversationId.value = (response.data as any).data.conversationId
   }
+
   const client = new YuanJingAI({
     baseUrl: `https://maas.ai-yuanjing.com/use/model/api/app/v1/`,
     apiKey: userInfoStore.userInfo?.token,
   })
+
   await client.Completion({
     input: content,
     model: 'deepseek-r1',
@@ -65,7 +77,7 @@ async function send(content: string) {
     extend_params: {},
     need_search_list: true,
     request_id: UUID(),
-  }, controller.signal, async (responseText: string) => {
+  }, controller.value.signal, async (responseText: string) => {
     const lines = responseText.split(/\r?\n/)
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]
@@ -73,11 +85,17 @@ async function send(content: string) {
         const data = line.slice(5).trim()
         if (data === '[DONE]') {
           console.warn('request done')
+          // 重置AbortController实例
+          controller.value = new AbortController()
+          signal.value = controller.value.signal
         }
         else {
           const choices = JSON.parse(data)
           if (choices.finish_reason === 'stop' || choices.finish === 1) {
             loading.value = false
+            // 重置AbortController实例
+            controller.value = new AbortController()
+            signal.value = controller.value.signal
           }
           else {
             chatList.value[0].content += choices.response || ''
@@ -85,17 +103,29 @@ async function send(content: string) {
         }
       }
     }
+  }).catch((error) => {
+    console.error('Fetch error:', error)
+    loading.value = false
+    // 重置AbortController实例
+    controller.value = new AbortController()
+    signal.value = controller.value.signal
   })
 }
 
-signal.addEventListener('abort', () => {
+signal.value.addEventListener('abort', () => {
   console.error('aborted!')
+  // 重置AbortController实例
+  controller.value = new AbortController()
+  signal.value = controller.value.signal
 })
 
 function cancel() {
   console.warn('cancel')
-  controller.abort()
+  controller.value.abort()
   loading.value = false
+  // 重置AbortController实例
+  controller.value = new AbortController()
+  signal.value = controller.value.signal
 }
 </script>
 
@@ -107,7 +137,7 @@ function cancel() {
       <ChatUINavbar title="联通元景" />
     </template>
     <!-- for循环渲染聊天记录列表 -->
-    <view v-for="(item, index) in chatList" :key="index" style="position: relative;">
+    <view v-for="item in chatList" :key="item.id" style="position: relative;">
       <!-- 如果要给聊天item添加长按的popup，请在popup标签上写style="transform: scaleY(-1);"，注意style="transform: scaleY(-1);"不要写在最外层，否则可能导致popup被其他聊天item盖住 -->
       <!-- <view class="popup" style="transform: scaleY(-1);">popUp</view> -->
 

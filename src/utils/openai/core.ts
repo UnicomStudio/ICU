@@ -107,8 +107,6 @@ export class YuanJingAI {
       }
 
       return readChunk()
-    }).catch((error) => {
-      console.error('Fetch error:', error)
     })
     // #endif
   }
