@@ -25,6 +25,7 @@ export default async ({ command, mode }) => {
   console.log('环境变量 env -> ', env)
 
   return defineConfig({
+    envDir: 'env',
     plugins: [
       // https://github.com/uni-helper/vite-plugin-uni-manifest
       UniHelperManifest(),

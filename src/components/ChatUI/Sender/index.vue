@@ -1,9 +1,22 @@
 <script setup lang="ts">
-const emit = defineEmits(['send'])
+interface Props {
+  loading?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  loading: false,
+})
+
+const emit = defineEmits(['send', 'cancel'])
 const message = ref('')
 
 function onSendClick() {
   emit('send', message.value)
+  message.value = ''
+}
+
+function onCancelClick() {
+  emit('cancel')
 }
 </script>
 
@@ -26,9 +39,16 @@ function onSendClick() {
           </sar-button>
         </view>
         <view class="flex flex-1 items-center justify-end gap-4">
-          <text i-carbon-image-copy class="inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:text-red-600 hover:opacity-100" />
-          <text i-carbon-ibm-cloud-vpc-file-storage class="inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:text-red-600 hover:opacity-100" />
+          <!-- <text i-carbon-image-copy class="inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:text-red-600 hover:opacity-100" />
+          <text i-carbon-ibm-cloud-vpc-file-storage class="inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:text-red-600 hover:opacity-100" /> -->
           <text
+            v-if="props.loading"
+            i-carbon-stop-filled
+            class="inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:text-red-600 hover:opacity-100"
+            @click="onCancelClick"
+          />
+          <text
+            v-else
             i-carbon-send-filled
             class="inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:text-red-600 hover:opacity-100"
             @click="onSendClick"

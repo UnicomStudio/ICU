@@ -54,7 +54,10 @@
     "vite.config.*": "pages.config.*, manifest.config.*, uno.config.*, volar.config.*, *.env, .env.*"
   },
   "cSpell.words": [
+    "abortcontroller",
     "Attributify",
+    "chatunicom",
+    "deepseek",
     "easterNday",
     "easycom",
     "iconfont",
