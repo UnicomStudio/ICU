@@ -3,60 +3,31 @@ import un from '@uni-helper/uni-network'
 import AbortController from 'abort-controller/dist/abort-controller'
 import { YuanJingAI } from '@/utils/openai/core'
 
-const instance = getCurrentInstance()
-const senderHeight = ref(0)
-
-onMounted(() => {
-  if (!instance || !instance.proxy)
-    return
-  const query = uni.createSelectorQuery().in(instance.proxy)
-  query
-    .select('.sender')
-    .boundingClientRect((data) => {
-      if (Array.isArray(data)) {
-        senderHeight.value = data[0]?.height ?? 0
-      }
-      else {
-        senderHeight.value = data?.height ?? 0
-      }
-    })
-    .exec()
-})
-
-// 倒序渲染
 type RoleType = 'user' | 'assistant' | 'system' | 'error' | 'info' | undefined
-
 interface ChatMessage {
   content: string
   role?: RoleType
 }
 
-const chatList = ref<ChatMessage[]>([
-  {
-    content: `模型由<span>YuanJing</span>变为<span>DeepSeek-R1</span>`,
-    role: 'info',
-  },
-  {
-    content: '你好！我是`元景`，你的全能智能助手。让元景助你：轻松工作，自在生活。​',
-    role: 'system',
-  },
-])
-
+const chatList = ref<ChatMessage[]>([])
 const conversationId = ref('')
 const loading = ref(false)
+const paging = ref(null)
 const controller = new AbortController()
+const signal = controller.signal
 
 async function send(content: string) {
   loading.value = true
-  chatList.value.unshift({
-    content,
+  paging.value.addChatRecordData({
     role: 'user',
+    content,
   })
 
-  chatList.value.unshift({
-    content: '',
+  paging.value.addChatRecordData({
     role: 'assistant',
+    content: '',
   })
+
   const userInfoStore = useUserInfoStore()
 
   if (conversationId.value === '') {
@@ -76,7 +47,6 @@ async function send(content: string) {
     })
     conversationId.value = (response.data as any).data.conversationId
   }
-  // #ifdef MP-WEIXIN
   const client = new YuanJingAI({
     baseUrl: `https://maas.ai-yuanjing.com/use/model/api/app/v1/`,
     apiKey: userInfoStore.userInfo?.token,
@@ -116,10 +86,7 @@ async function send(content: string) {
       }
     }
   })
-  // #endif
 }
-
-const signal = controller.signal
 
 signal.addEventListener('abort', () => {
   console.error('aborted!')
@@ -133,20 +100,35 @@ function cancel() {
 </script>
 
 <template>
-  <ChatUINavbar title="联通元景" fixed />
-  <scroll-view
-    scroll-y class="flex flex-col-reverse" enable-flex
-    :style="{ minHeight: 0, maxHeight: `calc(100vh - ${senderHeight}px - var(--sar-tabbar-height) - var(--sar-navbar-height) - ${getWindowInfo().statusBarHeight}px` }"
-  >
-    <block v-for="item in chatList" :key="item.content">
-      <ChatUIContent :role="item.role" :content="item.content" />
-    </block>
-  </scroll-view>
-  <ChatUISender
-    class="sender fixed bottom-[var(--sar-tabbar-height)] left-0 right-0" :loading="loading" @send="send"
-    @cancel="cancel"
-  />
+  <z-paging ref="paging" v-model="chatList" safe-area-inset-bottom use-chat-record-mode>
+    <!-- z-paging默认铺满全屏，此时页面所有view都应放在z-paging标签内，否则会被盖住 -->
+    <!-- 需要固定在页面顶部的view请通过slot="top"插入，包括自定义的导航栏 -->
+    <template #top>
+      <ChatUINavbar title="联通元景" />
+    </template>
+    <!-- for循环渲染聊天记录列表 -->
+    <view v-for="(item, index) in chatList" :key="index" style="position: relative;">
+      <!-- 如果要给聊天item添加长按的popup，请在popup标签上写style="transform: scaleY(-1);"，注意style="transform: scaleY(-1);"不要写在最外层，否则可能导致popup被其他聊天item盖住 -->
+      <!-- <view class="popup" style="transform: scaleY(-1);">popUp</view> -->
+
+      <!-- style="transform: scaleY(-1)"必须写，否则会导致列表倒置 -->
+      <!-- 注意不要直接在chat-item组件标签上设置style，因为在微信小程序中是无效的，请包一层view -->
+      <view style="transform: scaleY(-1);">
+        <ChatUIContent :message="item" />
+      </view>
+    </view>
+    <template #bottom>
+      <ChatUISender :loading="loading" @send="send" @cancel="cancel" />
+      <sar-tabbar-pit />
+    </template>
+  </z-paging>
 </template>
+
+<style lang="scss" scoped>
+.sender {
+  bottom: calc(var(--sar-tabbar-height) + env(safe-area-inset-bottom));
+}
+</style>
 
 <route lang="json5">
 {

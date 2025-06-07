@@ -1,36 +1,45 @@
 <script lang="ts" setup>
 import { defineProps, withDefaults } from 'vue'
 
-// 这里 props 未被使用，改为解构赋值以避免 ESLint 警告
-const { content, role, showCodeLine } = withDefaults(defineProps<{
+interface ChatMessage {
   content: string
-  role?: 'user' | 'assistant' | 'system' | 'error' | 'info'
+  role?: RoleType
   showCodeLine?: boolean
+}
+
+// 合并为单个message字典参数
+const props = withDefaults(defineProps<{
+  message: ChatMessage
 }>(), {
-  role: 'assistant',
-  showCodeLine: false,
+// 为了解决类型错误，给默认值添加 content 属性
+  message: () => ({
+    content: '',
+    role: 'assistant',
+    showCodeLine: false,
+  }),
 })
+const { message } = props
 </script>
 
 <template>
-  <block v-if="role === 'assistant' || role === 'system' || role === 'error'">
+  <block v-if="message.role === 'assistant' || message.role === 'system' || message.role === 'error'">
     <view class="mx-4 my-2 flex items-center justify-start">
       <view class="w-auto rounded-xl bg-[--sar-secondary-bg] px-4 py-2">
-        <MarkedParser :content="content" :show-code-line="showCodeLine" :class="[role === 'error' ? 'text-red' : '']" />
+        <MarkedParser :content="message.content" :show-code-line="message.showCodeLine" :class="[message.role === 'error' ? 'text-red' : '']" />
       </view>
     </view>
   </block>
-  <block v-else-if="role === 'info'">
+  <block v-else-if="message.role === 'info'">
     <view class="mx-4 my-2 flex items-center justify-center">
       <view class="w-auto rounded-xl bg-[--sar-secondary-bg] px-4 py-2">
-        <MarkedParser :content="content" :show-code-line="showCodeLine" />
+        <MarkedParser :content="message.content" :show-code-line="message.showCodeLine" />
       </view>
     </view>
   </block>
   <block v-else>
     <view class="mx-4 my-2 flex items-center justify-end">
       <text class="w-auto rounded-xl bg-[--sar-secondary-bg] px-4 py-2">
-        {{ content }}
+        {{ message.content }}
       </text>
     </view>
   </block>

@@ -44,7 +44,7 @@ export class YuanJingAI {
     this.apiKey = config.apiKey
     this.instance = un.create({
       baseUrl: config.baseUrl,
-      timeout: config.timeout || 1000,
+      timeout: config.timeout || 10000,
       headers: {
         ...config.defaultHeaders,
         'Accept': 'text/event-stream',
@@ -56,7 +56,6 @@ export class YuanJingAI {
   }
 
   Completion(config: Record<string, any>, signal?: UnGenericAbortSignal, listener?: onStreamReceivedListener) {
-    // #ifdef MP-WEIXIN
     const onHeadersReceived = (response?: { headers?: UnHeaders }) => {
       console.warn('调用 onHeadersReceived: ', response?.headers)
     }
@@ -64,6 +63,7 @@ export class YuanJingAI {
       const text = decodeArrayBuffer(response?.data)
       listener?.(text)
     }
+    // #ifdef MP-WEIXIN
     return this.instance.post('/chatunicom/stream', config, {
       enableChunked: true,
       responseType: 'arraybuffer',
@@ -74,15 +74,41 @@ export class YuanJingAI {
     // #endif
 
     // #ifdef H5 || APP-PLUS
-    fetch('<请求地址>', {
-      method: 'POST', // 请求方法
+    return fetch('https://maas.ai-yuanjing.com/use/model/api/app/v1/chatunicom/stream', {
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // 请求头
-        'Authorization': `Bearer ${this.apiKey}`, // 校验令牌，根据自己的服务器需求传
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify(config),
-    }).then(async (result) => {
-      onChunkReceived({ data: await result.arrayBuffer() })
+    }).then(async (response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      return response.body
+    }).then((stream) => {
+      const reader = stream.getReader()
+
+      async function readChunk() {
+        try {
+          const { value, done } = await reader.read()
+          if (done) {
+            console.warn('Stream reading completed')
+            await reader.releaseLock()
+            return
+          }
+          onChunkReceived({ data: value })
+          await readChunk()
+        }
+        catch (error) {
+          console.error('Error reading stream chunk:', error)
+          await reader.releaseLock()
+        }
+      }
+
+      return readChunk()
+    }).catch((error) => {
+      console.error('Fetch error:', error)
     })
     // #endif
   }

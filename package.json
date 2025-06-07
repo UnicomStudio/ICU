@@ -67,13 +67,13 @@
     "highlight.js": "^11.11.1",
     "marked-highlight": "^2.2.1",
     "node-html-parser": "^7.0.1",
-    "openai": "^5.1.1",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.3.0",
     "sard-uniapp": "^1.17.1",
     "tel-area-code": "^1.1.0",
     "vue": "~3.5.13",
-    "vue-i18n": "^9.14.3"
+    "vue-i18n": "^9.14.3",
+    "z-paging": "^2.8.7"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.14",
