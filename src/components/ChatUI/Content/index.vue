@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { defineProps, withDefaults } from 'vue'
-
 interface ChatMessage {
   content: string
-  role?: RoleType
+  role?: 'assistant' | 'system' | 'error' | 'info' | 'user'
   showCodeLine?: boolean
 }
 

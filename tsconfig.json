@@ -5,16 +5,23 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@img/*": ["./src/static/*"]
     },
     "types": [
       "@dcloudio/types",
+      "@uni-helper/uni-app-types",
       "@mini-types/alipay",
       "miniprogram-api-typings",
       "@uni-helper/uni-types",
+      "z-paging/types",
       "sard-uniapp/global"
     ],
     "allowJs": true,
+    "downlevelIteration": true, // 是否将 for...of 循环编译为适用于旧版 JavaScript 的代码
+    "importHelpers": true, // 是否使用模块化方式引入帮助函数
+    "noEmitHelpers": true, // 是否禁止生成 TypeScript 帮助函数
+    "removeComments": true, // 是否移除 TypeScript 代码中的注释
     "sourceMap": true
   },
   "vueCompilerOptions": {
@@ -25,6 +32,7 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "src/**/*.json"
   ]
 }

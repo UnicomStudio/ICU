@@ -1,6 +1,4 @@
 import type { IUserInfo } from '@/utils/sys'
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useUserInfoStore = defineStore(
   'user-info',

@@ -26,7 +26,7 @@ export default defineUniPages({
     list: [
       {
         iconPath: 'static/tabbar/home.png',
-        selectedIconPath: 'static/tabbar/homeHL.png',
+        selectedIconPath: 'static/tabbar/home.png',
         pagePath: 'pages/chat/index',
         text: '对话',
         // icon: 'home',
@@ -36,7 +36,7 @@ export default defineUniPages({
       },
       {
         iconPath: 'static/tabbar/home.png',
-        selectedIconPath: 'static/tabbar/homeHL.png',
+        selectedIconPath: 'static/tabbar/home.png',
         pagePath: 'pages/settings/index',
         text: '设置',
         icon: 'i-carbon-settings',

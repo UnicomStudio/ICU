@@ -15,7 +15,7 @@ onLoad(() => {
 <template>
   <!-- 顶部图片 - 绝对定位确保覆盖在顶部 -->
   <image
-    src="/static/banner.svg"
+    src="@img/banner.svg"
     mode="widthFix" class="absolute left-0 top-0 h-auto w-full"
   />
 

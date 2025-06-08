@@ -44,7 +44,7 @@ export class YuanJingAI {
     this.apiKey = config.apiKey
     this.instance = un.create({
       baseUrl: config.baseUrl,
-      timeout: config.timeout || 10000,
+      timeout: config.timeout || Number.POSITIVE_INFINITY,
       headers: {
         ...config.defaultHeaders,
         'Accept': 'text/event-stream',
@@ -87,7 +87,7 @@ export class YuanJingAI {
       }
       return response.body
     }).then((stream) => {
-      const reader = stream.getReader()
+      const reader = stream!.getReader()
 
       async function readChunk() {
         try {

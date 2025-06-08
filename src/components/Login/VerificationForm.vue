@@ -51,7 +51,7 @@ onLoad(async () => {
 <template>
   <view class="flex flex-col space-y-4">
     <marked-parser content="> + 验证码登录" />
-    <sar-input v-model="mobile" placeholder="请输入手机号码">
+    <sar-input v-model="mobile" placeholder="请输入手机号码" type="tel">
       <template #prepend>
         <view class="flex flex-row items-center text-[--sar-primary-text]" @click="areaVisible = true">
           <text>

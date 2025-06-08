@@ -26,8 +26,14 @@ export async function getCaptcha() {
 
 export async function sendCode(mobile: string, captchaId: string, captchaCode: string) {
   const response = await un.post('https://maas.ai-yuanjing.com/bffservice/v2/base/app/sendCode', { phone: mobile, captchaId, captchaCode })
+
   if (response.status === 200) {
-    useToast({ title: (response.data as any).data || (response.data as any).data.msg || '发送失败' })
+    try {
+      useToast({ title: (response.data as any).data || (response.data as any).msg })
+    }
+    catch {
+      useToast({ title: '发送失败' })
+    }
   }
 }
 

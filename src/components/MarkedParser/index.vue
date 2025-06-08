@@ -2,7 +2,6 @@
 import hljs from 'highlight.js'
 import { Marked } from 'marked'
 import { markedHighlight } from 'marked-highlight'
-import { computed } from 'vue'
 import { thinkExtension } from './thinkExtension'
 import 'highlight.js/styles/atom-one-dark-reasonable.css'
 

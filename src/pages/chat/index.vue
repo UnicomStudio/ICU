@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import un from '@uni-helper/uni-network'
 import AbortController from 'abort-controller/dist/abort-controller'
-import { YuanJingAI } from '@/utils/openai/core'
+import { YuanJingAI } from '@/utils/yuanjing/core'
 
 type RoleType = 'user' | 'assistant' | 'system' | 'error' | 'info' | undefined
 interface ChatMessage {
+  id: string
   content: string
   role?: RoleType
 }
@@ -21,7 +22,7 @@ function send(question: string) {
   if (loading.value) {
     return
   }
-  paging.value.addChatRecordData({
+  paging.value!.addChatRecordData({
     id: UUID(),
     role: 'user',
     content: question,
@@ -32,7 +33,7 @@ function send(question: string) {
 
 async function answer(content: string) {
   loading.value = true
-  paging.value.addChatRecordData({
+  paging.value!.addChatRecordData({
     id: UUID(),
     role: 'assistant',
     content: '',
@@ -78,6 +79,9 @@ async function answer(content: string) {
     need_search_list: true,
     request_id: UUID(),
   }, controller.value.signal, async (responseText: string) => {
+    if (loading.value === false) {
+      return
+    }
     const lines = responseText.split(/\r?\n/)
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]
@@ -91,20 +95,20 @@ async function answer(content: string) {
         }
         else {
           const choices = JSON.parse(data)
+          chatList.value[0].content += choices.response || ''
           if (choices.finish_reason === 'stop' || choices.finish === 1) {
             loading.value = false
             // 重置AbortController实例
             controller.value = new AbortController()
             signal.value = controller.value.signal
           }
-          else {
-            chatList.value[0].content += choices.response || ''
-          }
         }
       }
     }
   }).catch((error) => {
     console.error('Fetch error:', error)
+    chatList.value[0].content += '<div class="text-red">网络错误，请稍后重试~</div>'
+  }).finally(() => {
     loading.value = false
     // 重置AbortController实例
     controller.value = new AbortController()

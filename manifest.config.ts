@@ -35,6 +35,9 @@ export default defineManifestConfig({
     distribute: {
       /* android打包配置 */
       android: {
+        minSdkVersion: 30,
+        targetSdkVersion: 30,
+        abiFilters: ['armeabi-v7a', 'arm64-v8a'],
         permissions: [
           '<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>',
           '<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>',
@@ -57,6 +60,39 @@ export default defineManifestConfig({
       ios: {},
       /* SDK配置 */
       sdkConfigs: {},
+      /* 图标配置 */
+      icons: {
+        android: {
+          hdpi: 'static/app/icons/72x72.png',
+          xhdpi: 'static/app/icons/96x96.png',
+          xxhdpi: 'static/app/icons/144x144.png',
+          xxxhdpi: 'static/app/icons/192x192.png',
+        },
+        ios: {
+          appstore: 'static/app/icons/1024x1024.png',
+          ipad: {
+            'app': 'static/app/icons/76x76.png',
+            'app@2x': 'static/app/icons/152x152.png',
+            'notification': 'static/app/icons/20x20.png',
+            'notification@2x': 'static/app/icons/40x40.png',
+            'proapp@2x': 'static/app/icons/167x167.png',
+            'settings': 'static/app/icons/29x29.png',
+            'settings@2x': 'static/app/icons/58x58.png',
+            'spotlight': 'static/app/icons/40x40.png',
+            'spotlight@2x': 'static/app/icons/80x80.png',
+          },
+          iphone: {
+            'app@2x': 'static/app/icons/120x120.png',
+            'app@3x': 'static/app/icons/180x180.png',
+            'notification@2x': 'static/app/icons/40x40.png',
+            'notification@3x': 'static/app/icons/60x60.png',
+            'settings@2x': 'static/app/icons/58x58.png',
+            'settings@3x': 'static/app/icons/87x87.png',
+            'spotlight@2x': 'static/app/icons/80x80.png',
+            'spotlight@3x': 'static/app/icons/120x120.png',
+          },
+        },
+      },
     },
   },
   /* 快应用特有相关 */
@@ -66,6 +102,9 @@ export default defineManifestConfig({
     appid: VITE_WX_APPID,
     setting: {
       urlCheck: false,
+      // 是否启用 ES6 转 ES5
+      es6: true,
+      minified: true,
     },
     usingComponents: true,
     darkmode: true,
