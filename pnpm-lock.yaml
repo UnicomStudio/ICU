@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  pinia:
+    hash: f2616111c1c4f5826260015401bd8759d7db8eae6ccc4bf724c185860101425b
+    path: patches/pinia.patch
+
 importers:
 
   .:
@@ -76,10 +81,10 @@ importers:
         version: 7.0.1
       pinia:
         specifier: ^3.0.3
-        version: 3.0.3(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
+        version: 3.0.3(patch_hash=f2616111c1c4f5826260015401bd8759d7db8eae6ccc4bf724c185860101425b)(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
       pinia-plugin-persistedstate:
         specifier: ^4.3.0
-        version: 4.3.0(pinia@3.0.3(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))
+        version: 4.3.0(pinia@3.0.3(patch_hash=f2616111c1c4f5826260015401bd8759d7db8eae6ccc4bf724c185860101425b)(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))
       sard-uniapp:
         specifier: ^1.17.1
         version: 1.17.1(@dcloudio/types@3.4.14)(vue@3.5.13(typescript@5.7.3))
@@ -12733,18 +12738,18 @@ snapshots:
 
   pify@2.3.0: {}
 
-  pinia-plugin-persistedstate@4.3.0(pinia@3.0.3(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))):
+  pinia-plugin-persistedstate@4.3.0(pinia@3.0.3(patch_hash=f2616111c1c4f5826260015401bd8759d7db8eae6ccc4bf724c185860101425b)(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))):
     dependencies:
       '@nuxt/kit': 3.17.5
       deep-pick-omit: 1.2.1
       defu: 6.1.4
       destr: 2.0.5
     optionalDependencies:
-      pinia: 3.0.3(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
+      pinia: 3.0.3(patch_hash=f2616111c1c4f5826260015401bd8759d7db8eae6ccc4bf724c185860101425b)(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
     transitivePeerDependencies:
       - magicast
 
-  pinia@3.0.3(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)):
+  pinia@3.0.3(patch_hash=f2616111c1c4f5826260015401bd8759d7db8eae6ccc4bf724c185860101425b)(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)):
     dependencies:
       '@vue/devtools-api': 7.7.6
       vue: 3.5.13(typescript@5.7.3)

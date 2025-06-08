@@ -21,7 +21,7 @@
     "chinaunicom"
   ],
   "engines": {
-    "node": ">=22",
+    "node": ">=18",
     "pnpm": ">=8"
   },
   "scripts": {

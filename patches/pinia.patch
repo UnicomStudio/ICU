@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index 8ed71ab58a8c95dfe2f5ad3a0945471118dea279..535ee11d9e8c1ca0fdcf3d4bfc1916b41c090d29 100644
+--- a/package.json
++++ b/package.json
+@@ -26,6 +26,7 @@
+       "import": "./dist/pinia.mjs",
+       "require": "./index.cjs"
+     },
++    "./dist/pinia.mjs": "./dist/pinia.mjs",
+     "./package.json": "./package.json"
+   },
+   "sideEffects": false,
