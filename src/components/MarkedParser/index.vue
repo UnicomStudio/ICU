@@ -90,7 +90,7 @@ const marked = new Marked(
 
 const parsedContent = computed(() => {
   try {
-    return marked.parse(props.content)
+    return marked.parse(props.content) as any
   }
   catch (e) {
     console.error('Markdown解析错误:', e)
@@ -99,7 +99,7 @@ const parsedContent = computed(() => {
 })
 
 // 处理 rich-text 中节点点击事件，主要用于代码复制按钮
-function handleItemClick(e) {
+function handleItemClick(e: any) {
   const { name, attrs } = e.detail.node
   const { 'code-data-index': codeDataIndex, class: className } = attrs
   // 判断点击的是否为复制按钮

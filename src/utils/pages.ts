@@ -1,4 +1,4 @@
-import pagesConfig from '@/pages.json'
+import * as pagesConfig from '@/pages.json'
 
 const { tabBar = { list: [] } } = { ...pagesConfig }
 

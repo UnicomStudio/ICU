@@ -74,6 +74,16 @@ export default async ({ command, mode }) => {
     optimizeDeps: {
       exclude: ['sard-uniapp'],
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          javascriptEnabled: true,
+          api: 'modern-compiler',
+          // 关闭警告
+          silenceDeprecations: ['legacy-js-api', 'import'],
+        },
+      },
+    },
     resolve: {
       alias: {
         '@': path.join(process.cwd(), './src'),
