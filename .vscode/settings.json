@@ -53,7 +53,8 @@
   "explorer.fileNesting.patterns": {
     "*.env": "$(capture).env.*",
     "vite.config.*": "pages.config.*, manifest.config.*, uno.config.*, volar.config.*,tsconfig.*.json,tsconfig.json",
-    "package.json": "pnpm-lock.yaml,pnpm-workspace.yaml,LICENSE*,.gitattributes,.gitignore,.gitpod.yml,CNAME,.npmrc,.browserslistrc,.node-version"
+    "package.json": "pnpm-lock.yaml,pnpm-workspace.yaml,LICENSE*,.gitattributes,.gitignore,.gitpod.yml,CNAME,.npmrc,.browserslistrc,.node-version",
+    "App.vue": "main.ts, *.d.ts"
   },
   "cSpell.words": [
     "abortcontroller",
@@ -65,6 +66,7 @@
     "deepseek",
     "easterNday",
     "easycom",
+    "FUNCTIONCALL",
     "iconfont",
     "iconify",
     "kuaishou",
@@ -75,6 +77,7 @@
     "popout",
     "qrcode",
     "quickapp",
+    "QWEN",
     "sinaweibo",
     "stacktracey",
     "toutiao",

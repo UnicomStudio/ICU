@@ -31,12 +31,7 @@ function onCancelClick() {
       />
       <view class="mt-4 flex flex-row gap-4">
         <view class="flex items-center gap-4">
-          <sar-button type="outline" round inline size="mini">
-            <text>
-              DeepSeek
-            </text>
-            <text i-carbon-caret-down />
-          </sar-button>
+          <slot name="options" />
         </view>
         <view class="flex flex-1 items-center justify-end gap-4">
           <!-- <text i-carbon-image-copy class="inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:text-red-600 hover:opacity-100" />

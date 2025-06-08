@@ -164,19 +164,29 @@ curl -H 'Connection: keep-alive' -H 'x-logid: e6933a64-858b-47c4-84e9-ccdd0c3b57
 
 - [x] ✅ 对接元景接口
   - [ ] 🔄 用户过期无感刷新接口对接
+  - [ ] 📋️ 对话列表查询
 - [ ] 🌊 流式输出功能
-  - [ ] 💬 微信小程序流式输出函数封装
-  - [ ] 🌐 网页版本流式输出函数封装
+  - [x] ✅ 微信小程序流式输出函数封装
+  - [x] ✅ 网页版本流式输出函数封装
   - [ ] 📱 APP 版本流式输出函数封装
   - [ ] ⚡️ 流输出状态判断
+- [ ] 💭 AI 对话
+  - [ ] 💬 语音识别功能
+  - [ ] 🤲 语音合成功能
+  - [ ] 🔏 临时对话功能
+  - [ ] ☝️ 提示词预选显示
+  - [ ] 📻️ 智能体广场
 - [x] ✅ MarkedParser 宽屏样式修改
 
 ## 🙏 致谢
 
-- 📚 [JS生成uuid(唯一标识符)](https://blog.csdn.net/pipizhou16/article/details/123691053)
+- ⚕️ [JS生成uuid(唯一标识符)](https://blog.csdn.net/pipizhou16/article/details/123691053)
+- 📑 [z-paging](https://z-paging.zxlee.cn/) : 一个uni-app (opens new window)分页组件。
 
 ---
 
 <p align="center" style="font-size:1.2em; font-weight:bold; color:#d33a3a;">
-<a href="https://github.com/UnicomStudio/ICU">ICU</a> © 2025 by <a href="https://github.com/easterNday">easterNday</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+<img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 16px;max-height:16px;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 16px;max-height:16px;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 16px;max-height:16px;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" style="max-width: 16px;max-height:16px;margin-left: .2em;">
+<br/>
+<a href="https://github.com/UnicomStudio/ICU">ICU</a> © 2025 by <a href="https://github.com/easterNday">easterNday</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>
 </p>
