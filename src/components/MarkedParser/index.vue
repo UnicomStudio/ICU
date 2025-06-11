@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import hljs from 'highlight.js'
-import { Marked } from 'marked'
-import { markedHighlight } from 'marked-highlight'
-import { thinkExtension } from './thinkExtension'
+import MarkdownIt from 'markdown-it'
 import 'highlight.js/styles/atom-one-dark-reasonable.css'
 
 const props = defineProps({
@@ -22,75 +20,62 @@ const componentClass = 'chat-content'
 const copyCodeData: string[] = []
 
 // 配置marked解析器
-const marked = new Marked(
-  markedHighlight({
-    emptyLangClass: 'hljs',
-    langPrefix: 'hljs language-',
-    highlight(code, lang) {
-      // 将原始代码存入 copyCodeData，供复制按钮使用
-      copyCodeData.push(code)
-      let result = ''
-      const language = hljs.getLanguage(lang) ? lang : 'plaintext'
-      try {
-        result = hljs.highlight(code, { language }).value
-      }
-      catch {
-        result = hljs.highlightAuto(code).value
-      }
+const marked = new MarkdownIt({
+  html: true,
+  highlight(code, lang) {
+    let result = ''
+    const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+    try {
+      result = hljs.highlight(code, { language }).value
+    }
+    catch {
+      result = hljs.highlightAuto(code).value
+    }
 
-      return result
-    },
-  }),
-  {
-    renderer: {
-      code({ text, lang }) {
-        const result = hljs.highlightAuto(text).value
-
-        // 将高亮后的代码按行拆分，去除最后空行
-        const lines = result.split(/\n/).slice(0, -1)
-        // 为每行代码添加自定义行号
-        let html = lines
-          .map((item, index) => {
-            if (item === '') {
-              return ''
-            }
-            // 每行包裹 <li>，行号放在 <span> 中，data-line 属性存储行号
-            return (
-              `<li><span class="line-num" data-line="${index + 1}"></span>${item}</li>`
-            )
-          })
-          .join('')
-        if (props.showCodeLine) {
-          html = `<ol style="padding: 0px 30px;">${html}</ol>`
+    // 将高亮后的代码按行拆分，去除最后空行
+    const lines = result.split(/\n/).slice(0, -1)
+    // 为每行代码添加自定义行号
+    let html = lines
+      .map((item, index) => {
+        if (item === '') {
+          return ''
         }
-        else {
-          html = `<ol style="padding: 0px 7px;list-style:none;">${html}</ol>`
-        }
+        // 每行包裹 <li>，行号放在 <span> 中，data-line 属性存储行号
+        return (
+          `<li><span class="line-num" data-line="${index + 1}"></span>${item}</li>`
+        )
+      })
+      .join('')
+    if (props.showCodeLine) {
+      html = `<ol style="padding: 0px 30px;">${html}</ol>`
+    }
+    else {
+      html = `<ol style="padding: 0px 7px;list-style:none;">${html}</ol>`
+    }
 
-        html = text
+    // 将原始代码存入 copyCodeData，供复制按钮使用
+    copyCodeData.push(code)
 
-        let codeHTML = `<div class="code-block">`
-        // #ifndef MP-WEIXIN
-        codeHTML += `<div style="color: #aaa;font-size: 12px;padding:8px; background-color: #282c34; border: 1px solid #282c34; border-radius: 6px 6px 0 0; display: flex; flex-direction: row;">`
-        // 显示代码语言及复制按钮，复制按钮绑定 code-data-index 方便查找对应代码
-        codeHTML += `<span style="color:#e6c07b;margin-left: 8px; flex: 1;">${lang}</span><a class="copy-btn" code-data-index="${copyCodeData.length - 1}" style="margin-right: 8px;">复制代码</a>`
-        codeHTML += `</div>`
-        codeHTML += `<pre class="hljs" style="word-wrap: break-word;white-space: pre-wrap;width:auto;padding:10px 8px 0;margin-bottom:5px;overflow: auto;display: block; border-radius: 0 0 6px 6px;"><code class="hljs language-${lang}">${html}</code></pre>`
-        // #else
-        codeHTML += `<pre class="hljs" style="word-wrap: break-word;white-space: pre-wrap;width:auto;padding:10px 8px 0;margin-bottom:5px;overflow: auto;display: block; border-radius: 6px;"><code class="hljs language-${lang}">${html}</code></pre>`
-        // #endif
-        codeHTML += '</div>'
+    let codeHTML = `<div class="code-block">`
+    codeHTML += `<div style="color: #aaa;font-size: 12px;padding:8px; background-color: #282c34; border: 1px solid #282c34; border-radius: 6px 6px 0 0; display: flex; flex-direction: row;">`
+    // 显示代码语言及复制按钮，复制按钮绑定 code-data-index 方便查找对应代码
+    codeHTML += `<span style="color:#e6c07b;margin-left: 8px; flex: 1;">${lang}</span>`
+    // #ifndef MP-WEIXIN
+    codeHTML += `<a class="copy-btn" code-data-index="${copyCodeData.length - 1}" style="margin-right: 8px;">复制代码</a>`
+    // #endif
+    codeHTML += `</div>`
+    codeHTML += `<pre class="hljs" style="word-wrap: break-word;white-space: pre-wrap;width:auto;padding:10px 8px 0;margin-bottom:5px;overflow: auto;display: block; border-radius: 0 0 6px 6px;"><code class="hljs language-${lang}">${html}</code></pre>`
+    codeHTML += '</div>'
 
-        return codeHTML
-      },
-    },
-    extensions: [thinkExtension],
+    return codeHTML
   },
-)
+})
 
 const parsedContent = computed(() => {
+  // TODO: 处理 <think>
+  const value = props.content.replace(/<think>|<think\/>|<think \/>|<\/think>|<\/ think>/g, '# ')
   try {
-    return marked.parse(props.content) as any
+    return marked.render(value) as any
   }
   catch (e) {
     console.error('Markdown解析错误:', e)
