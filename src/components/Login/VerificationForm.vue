@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import mpHtml from 'mp-html/dist/uni-app/components/mp-html/mp-html'
 import { getCaptcha, login, sendCode } from '@/utils/sys'
 
 const emit = defineEmits<{
@@ -50,7 +51,7 @@ onLoad(async () => {
 
 <template>
   <view class="flex flex-col space-y-4">
-    <marked-parser content="> + 验证码登录" />
+    <mp-html markdown content="> + 验证码登录" />
     <sar-input v-model="mobile" placeholder="请输入手机号码" type="tel">
       <template #prepend>
         <view class="flex flex-row items-center text-[--sar-primary-text]" @click="areaVisible = true">

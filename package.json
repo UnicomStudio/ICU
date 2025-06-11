@@ -15,7 +15,9 @@
     "type": "git",
     "url": "https://github.com/UnicomStudio/ICU"
   },
-  "bugs": { "url": "https://github.com/UnicomStudio/ICU/issues" },
+  "bugs": {
+    "url": "https://github.com/UnicomStudio/ICU/issues"
+  },
   "keywords": [
     "uni-app",
     "chinaunicom"
@@ -91,9 +93,7 @@
     "@uni-helper/uni-network": "^0.21.3",
     "@vueuse/core": "^12.4.0",
     "abort-controller": "^3.0.0",
-    "highlight.js": "^11.11.1",
-    "marked-highlight": "^2.2.1",
-    "node-html-parser": "^7.0.1",
+    "mp-html": "git+ssh://git@gitcode.com:qq_19577209/MarkedParser.git",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.3.0",
     "sard-uniapp": "^1.17.1",

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import mpHtml from 'mp-html/dist/uni-app/components/mp-html/mp-html'
 import { useNavigate } from '@/composables/useNavigate'
 
 const emit = defineEmits<{
@@ -8,7 +9,7 @@ const emit = defineEmits<{
 
 <template>
   <view class="flex flex-col space-y-4">
-    <marked-parser content="> + 账号密码登录" />
+    <mp-html markdown content="> + 账号密码登录" />
     <sar-input placeholder="请输入手机号码">
       <template #prepend>
         <view i-carbon-group-account class="text-[--sar-primary-text]" />

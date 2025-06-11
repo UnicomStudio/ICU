@@ -16,6 +16,5 @@ declare module 'vue' {
     ICUTabbar: typeof import('./components/ICU/Tabbar.vue')['default']
     LoginAccountForm: typeof import('./components/Login/AccountForm.vue')['default']
     LoginVerificationForm: typeof import('./components/Login/VerificationForm.vue')['default']
-    MarkedParser: typeof import('./components/MarkedParser/index.vue')['default']
   }
 }

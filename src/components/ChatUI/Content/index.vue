@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import mpHtml from 'mp-html/dist/uni-app/components/mp-html/mp-html'
+
 interface ChatMessage {
   content: string
   role?: 'assistant' | 'system' | 'error' | 'info' | 'user'
@@ -23,14 +25,14 @@ const { message } = props
   <block v-if="message.role === 'assistant' || message.role === 'system' || message.role === 'error'">
     <view class="mx-4 my-2 flex items-center justify-start">
       <view class="w-auto rounded-xl bg-[--sar-secondary-bg] px-4 py-2">
-        <MarkedParser :content="message.content" :show-code-line="message.showCodeLine" :class="[message.role === 'error' ? 'text-red' : '']" />
+        <mp-html class="mp-html" markdown :content="message.content" />
       </view>
     </view>
   </block>
   <block v-else-if="message.role === 'info'">
     <view class="mx-4 my-2 flex items-center justify-center">
       <view class="w-auto rounded-xl bg-[--sar-secondary-bg] px-4 py-2">
-        <MarkedParser :content="message.content" :show-code-line="message.showCodeLine" />
+        <mp-html class="mp-html" markdown :content="message.content" />
       </view>
     </view>
   </block>
