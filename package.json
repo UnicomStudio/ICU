@@ -90,6 +90,7 @@
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-4060320250423001",
     "@dcloudio/uni-mp-xhs": "3.0.0-alpha-4060320250423001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-4060320250423001",
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@uni-helper/uni-network": "^0.21.3",
     "@vueuse/core": "^12.4.0",
     "abort-controller": "^3.0.0",

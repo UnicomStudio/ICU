@@ -29,6 +29,13 @@ export default defineManifestConfig({
       autoclose: true,
       delay: 0,
     },
+    webView: { // 3.5.0 + 仅Android支持
+      x5: { // 此属性需要勾选 Android X5 Webview 模块，详细参见下面的说明
+        timeOut: 3000, // 超时时间
+        showTipsWithoutWifi: true, // 是否在非WiFi网络环境时，显示用户确认下载x5内核的弹窗。默认值false
+        allowDownloadWithoutWiFi: false, // 是否允许用户在非WiFi网络时进行x5内核的下载。默认值false（如果为true，就不会显示用户确认的弹窗。）
+      },
+    },
     /* 模块配置 */
     modules: {},
     /* 应用发布信息 */

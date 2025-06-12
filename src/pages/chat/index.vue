@@ -87,23 +87,21 @@ async function answer(content: string) {
     const lines = responseText.split(/\r?\n/)
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]
-      if (line.startsWith('data:')) {
-        const data = line.slice(5).trim()
-        if (data === '[DONE]') {
-          console.warn('request done')
+      const data = line.startsWith('data:') ? line.slice(5).trim() : line.trim()
+      if (data === '[DONE]') {
+        console.warn('request done')
+        // 重置AbortController实例
+        controller.value = new AbortController()
+        signal.value = controller.value.signal
+      }
+      else {
+        const choices = JSON.parse(data)
+        chatList.value[0].content += choices.response || ''
+        if (choices.finish_reason === 'stop' || choices.finish === 1) {
+          loading.value = false
           // 重置AbortController实例
           controller.value = new AbortController()
           signal.value = controller.value.signal
-        }
-        else {
-          const choices = JSON.parse(data)
-          chatList.value[0].content += choices.response || ''
-          if (choices.finish_reason === 'stop' || choices.finish === 1) {
-            loading.value = false
-            // 重置AbortController实例
-            controller.value = new AbortController()
-            signal.value = controller.value.signal
-          }
         }
       }
     }

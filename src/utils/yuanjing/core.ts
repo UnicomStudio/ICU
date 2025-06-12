@@ -1,4 +1,7 @@
-import { un, type UnGenericAbortSignal, type UnHeaders } from '@uni-helper/uni-network'
+// #ifdef APP-PLUS || H5
+import { fetchEventSource } from '@microsoft/fetch-event-source'
+// #endif
+import { un, type UnHeaders } from '@uni-helper/uni-network'
 
 type onStreamReceivedListener = (text: string) => void
 
@@ -55,7 +58,7 @@ export class YuanJingAI {
     return this
   }
 
-  Completion(config: Record<string, any>, signal?: UnGenericAbortSignal, listener?: onStreamReceivedListener) {
+  Completion(config: Record<string, any>, signal?: any, listener?: onStreamReceivedListener) {
     const onHeadersReceived = (response?: { headers?: UnHeaders }) => {
       console.warn('调用 onHeadersReceived: ', response?.headers)
     }
@@ -74,48 +77,21 @@ export class YuanJingAI {
     // #endif
 
     // #ifdef H5 || APP-PLUS
-    // 将 H5 和 APP-PLUS 平台的代码放入 else 块，避免 unreachable code
-    // 这里用条件编译注释保持原有逻辑
-    // 但 TypeScript 仍然会检查代码，故用 if-else 结构包裹
-    if (false) {
-      // 伪代码，防止 TS 报错
-    }
-    else {
-      return fetch('https://maas.ai-yuanjing.com/use/model/api/app/v1/chatunicom/stream', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`,
-        },
-        body: JSON.stringify(config),
-      }).then(async (response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        return response.body
-      }).then((stream) => {
-        const reader = stream!.getReader()
-
-        async function readChunk() {
-          try {
-            const { value, done } = await reader.read()
-            if (done) {
-              console.warn('Stream reading completed')
-              await reader.releaseLock()
-              return
-            }
-            onChunkReceived({ data: value })
-            await readChunk()
-          }
-          catch (error) {
-            console.error('Error reading stream chunk:', error)
-            await reader.releaseLock()
-          }
-        }
-
-        return readChunk()
-      })
-    }
+    return fetchEventSource('https://maas.ai-yuanjing.com/use/model/api/app/v1/chatunicom/stream', {
+      method: 'POST', // 请求方法，SSE 通常是 GET 请求。如果涉及到双向通信，需要改为POST。
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.apiKey}`,
+      },
+      body: JSON.stringify(config),
+      signal,
+      onmessage(event) {
+        onChunkReceived({ data: event.data ? new TextEncoder().encode(event.data) : undefined })
+      },
+      onerror(error) {
+        console.error('Error:', error)
+      },
+    })
     // #endif
   }
 }
