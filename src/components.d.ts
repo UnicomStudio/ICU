@@ -17,5 +17,7 @@ declare module 'vue' {
     LoginAccountForm: typeof import('./components/Login/AccountForm.vue')['default']
     LoginVerificationForm: typeof import('./components/Login/VerificationForm.vue')['default']
     MarkedParser: typeof import('./components/MarkedParser/index.vue')['default']
+    SSEClient: typeof import('./components/SSEClient/index.vue')['default']
+    SSEClientApp: typeof import('./components/SSEClient/App.vue')['default']
   }
 }

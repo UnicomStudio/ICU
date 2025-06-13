@@ -76,6 +76,13 @@
           }
         }
       }
+    },
+    "webView": {
+      "x5": {
+        "timeOut": 3000,
+        "showTipsWithoutWifi": true,
+        "allowDownloadWithoutWiFi": false
+      }
     }
   },
   "quickapp": {},
