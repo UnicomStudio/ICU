@@ -27,7 +27,7 @@ export default defineUniPages({
       {
         iconPath: 'static/tabbar/home.png',
         selectedIconPath: 'static/tabbar/home.png',
-        pagePath: 'pages/chat/index',
+        pagePath: 'pages/index',
         text: '对话',
         // icon: 'home',
         // iconType: 'wot',

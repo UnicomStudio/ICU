@@ -10,7 +10,12 @@ const props = withDefaults(defineProps<{
   <sar-navbar :title="props.title" status-bar fixed>
     <template #left>
       <sar-navbar-item>
-        <text i-simple-icons-chatwoot class="text-2xl text-gray-500" />
+        <text i-carbon-list class="text-2xl text-gray-500" />
+      </sar-navbar-item>
+    </template>
+    <template #right>
+      <sar-navbar-item>
+        <text i-carbon-chat-bot class="text-2xl text-gray-500" />
       </sar-navbar-item>
     </template>
   </sar-navbar>

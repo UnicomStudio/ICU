@@ -7,12 +7,8 @@
   },
   "pages": [
     {
-      "path": "pages/login",
-      "type": "home"
-    },
-    {
-      "path": "pages/chat/index",
-      "type": "page",
+      "path": "pages/index",
+      "type": "home",
       "layout": "tabbar"
     },
     {
@@ -40,7 +36,7 @@
       {
         "iconPath": "static/tabbar/home.png",
         "selectedIconPath": "static/tabbar/home.png",
-        "pagePath": "pages/chat/index",
+        "pagePath": "pages/index",
         "text": "对话",
         "icon": "i-carbon-chat",
         "iconType": "unocss"
@@ -55,6 +51,5 @@
       }
     ]
   },
-  "__esModule": true,
   "subPackages": []
 }

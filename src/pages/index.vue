@@ -251,11 +251,8 @@ function cancel() {
 <template>
   <!-- #ifdef H5 || APP-PLUS -->
   <SSEClientApp
-    ref="SSEClientAppRef"
-    @on-open="onSSEClientOpen"
-    @on-error="onSSEClientError"
-    @on-message="onSSEClientMessage"
-    @on-finish="onSSEClientFinish"
+    ref="SSEClientAppRef" @on-open="onSSEClientOpen" @on-error="onSSEClientError"
+    @on-message="onSSEClientMessage" @on-finish="onSSEClientFinish"
   />
   <!-- #endif -->
   <z-paging ref="paging" v-model="chatList" safe-area-inset-bottom use-chat-record-mode>
@@ -306,9 +303,7 @@ function cancel() {
   </z-paging>
 
   <sar-picker-popout
-    v-model:visible="modelSelectVisible"
-    title="请选择您需要使用的模型"
-    :columns="modelList"
+    v-model:visible="modelSelectVisible" title="请选择您需要使用的模型" :columns="modelList"
     @change="changeModel"
   />
 </template>
@@ -319,7 +314,7 @@ function cancel() {
 }
 </style>
 
-<route lang="json5">
+<route type="home" lang="json5">
 {
   "layout": "tabbar"
 }
