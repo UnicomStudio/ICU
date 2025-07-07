@@ -7,15 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AreaCode: typeof import('./components/AreaCode/index.vue')['default']
-    AreaCodeSearch: typeof import('./components/AreaCode/Search.vue')['default']
     ChatUIContent: typeof import('./components/ChatUI/Content/index.vue')['default']
     ChatUILoading: typeof import('./components/ChatUI/Loading/index.vue')['default']
     ChatUINavbar: typeof import('./components/ChatUI/Navbar/index.vue')['default']
     ChatUISender: typeof import('./components/ChatUI/Sender/index.vue')['default']
     ICUTabbar: typeof import('./components/ICU/Tabbar.vue')['default']
-    LoginAccountForm: typeof import('./components/Login/AccountForm.vue')['default']
-    LoginVerificationForm: typeof import('./components/Login/VerificationForm.vue')['default']
     MarkedParser: typeof import('./components/MarkedParser/index.vue')['default']
     SSEClient: typeof import('./components/SSEClient/index.vue')['default']
     SSEClientApp: typeof import('./components/SSEClient/App.vue')['default']

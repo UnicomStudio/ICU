@@ -97,6 +97,13 @@ export default async ({ command, mode }) => {
       port: Number.parseInt(VITE_APP_PORT, 10),
       // 若端口已被占用则会直接退出，而不是尝试下一个可用端口。
       strictPort: true,
+      proxy: {
+        '/api': {
+          target: 'https://maas-api.ai-yuanjing.com',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, ''),
+        },
+      },
     },
     build: {
       sourcemap: false,

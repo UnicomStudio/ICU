@@ -8,13 +8,7 @@
   "pages": [
     {
       "path": "pages/index",
-      "type": "home",
-      "layout": "tabbar"
-    },
-    {
-      "path": "pages/settings/index",
-      "type": "page",
-      "layout": "tabbar"
+      "type": "home"
     }
   ],
   "globalStyle": {
@@ -26,30 +20,6 @@
     "navigationBarTextStyle": "@navTxtStyle",
     "navigationBarTitleText": "联通元景",
     "navigationStyle": "custom"
-  },
-  "tabBar": {
-    "backgroundColor": "@tabBgColor",
-    "borderStyle": "@tabBorderStyle",
-    "color": "@tabFontColor",
-    "selectedColor": "@tabSelectedColor",
-    "list": [
-      {
-        "iconPath": "static/tabbar/home.png",
-        "selectedIconPath": "static/tabbar/home.png",
-        "pagePath": "pages/index",
-        "text": "对话",
-        "icon": "i-carbon-chat",
-        "iconType": "unocss"
-      },
-      {
-        "iconPath": "static/tabbar/home.png",
-        "selectedIconPath": "static/tabbar/home.png",
-        "pagePath": "pages/settings/index",
-        "text": "设置",
-        "icon": "i-carbon-settings",
-        "iconType": "unocss"
-      }
-    ]
   },
   "subPackages": []
 }

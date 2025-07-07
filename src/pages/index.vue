@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-import un from '@uni-helper/uni-network'
-import AbortController from 'abort-controller/dist/abort-controller'
-import { YuanJingAI } from '@/utils/yuanjing/core'
-
 type RoleType = 'user' | 'assistant' | 'system' | 'error' | 'info' | undefined
 interface ChatMessage {
   id: string
@@ -12,52 +8,9 @@ interface ChatMessage {
 
 const paging = ref<any>(null)
 
-const curModel = ref('deepseek-r1')
-const modelSelectVisible = ref(false)
-const modelList = ref([
-  { label: 'YUANJING-7B-CHAT', value: 'YUANJING-7B-CHAT', description: '中国联通元景大模型（7B），通用文本生成' },
-  { label: 'YUANJING2-8B-CHAT', value: 'YUANJING2-8B-CHAT', description: '中国联通元景大模型（8B），通用文本生成' },
-  { label: 'YUANJING-13B-CHAT', value: 'YUANJING-13B-CHAT', description: '中国联通元景大模型（13B），通用文本生成' },
-  { label: 'YUANJING-34B-CHAT', value: 'YUANJING-34B-CHAT', description: '中国联通元景大模型（34B），通用文本生成' },
-  { label: 'YUANJING-70B-CHAT', value: 'YUANJING-70B-CHAT', description: '中国联通元景大模型（70B），通用文本生成' },
-  { label: 'YUANJING-C1', value: 'YUANJING-C1', description: '中国联通元景大模型（C1），通用文本生成' },
-  { label: 'DEEPSEEK-V3', value: 'DEEPSEEK-V3', description: '深度求索（DeepSeek）研发的推理模型，通用任务' },
-  { label: 'DEEPSEEK-R1', value: 'DEEPSEEK-R1', description: '深度求索（DeepSeek）研发的推理模型，通用任务' },
-  { label: 'DEEPSEEK-R1-SAFE', value: 'DEEPSEEK-R1-SAFE', description: '深度求索（DeepSeek）研发的安全版本推理模型' },
-  { label: 'DEEPSEEK-R1-DISTILL-QWEN-1.5B', value: 'DEEPSEEK-R1-DISTILL-QWEN-1.5B', description: '深度求索（DeepSeek）研发的蒸馏模型，源自Qwen-1.5B' },
-  { label: 'DEEPSEEK-R1-DISTILL-QWEN-7B', value: 'DEEPSEEK-R1-DISTILL-QWEN-7B', description: '深度求索（DeepSeek）研发的蒸馏模型，源自Qwen-7B' },
-  { label: 'DEEPSEEK-R1-DISTILL-QWEN-14B', value: 'DEEPSEEK-R1-DISTILL-QWEN-14B', description: '深度求索（DeepSeek）研发的蒸馏模型，源自Qwen-14B' },
-  { label: 'DEEPSEEK-R1-DISTILL-QWEN-32B', value: 'DEEPSEEK-R1-DISTILL-QWEN-32B', description: '深度求索（DeepSeek）研发的蒸馏模型，源自Qwen-32B' },
-  { label: 'DEEPSEEK-R1-DISTILL-LLAMA-8B', value: 'DEEPSEEK-R1-DISTILL-LLAMA-8B', description: '深度求索（DeepSeek）研发的蒸馏模型，源自Llama-8B' },
-  { label: 'DEEPSEEK-R1-DISTILL-LLAMA-70B', value: 'DEEPSEEK-R1-DISTILL-LLAMA-70B', description: '深度求索（DeepSeek）研发的蒸馏模型，源自Llama-70B' },
-  { label: 'QWQ-32B', value: 'QWQ-32B', description: '通义千问模型（32B），通用任务处理' },
-  { label: 'QWEN2.5-32B-INSTRUCT', value: 'QWEN2.5-32B-INSTRUCT', description: '阿里巴巴达摩院研发的通义千问模型（32B），指令理解' },
-  { label: 'QWEN2.5-72B-INSTRUCT', value: 'QWEN2.5-72B-INSTRUCT', description: '阿里巴巴达摩院研发的通义千问模型（72B），指令理解' },
-  { label: 'QWEN3-235B-A22B', value: 'QWEN3-235B-A22B', description: '阿里巴巴达摩院研发的通义千问模型（235B A22B），通用任务' },
-  { label: 'YUANJING-70B-FUNCTIONCALL', value: 'YUANJING-70B-FUNCTIONCALL', description: '中国联通元景大模型（70B），支持函数调用' },
-  { label: 'DEEPSEEK-V3-FUNCTIONCALL', value: 'DEEPSEEK-V3-FUNCTIONCALL', description: '深度求索（DeepSeek）研发的推理模型，支持函数调用' },
-  { label: 'YUANJING-70B-MATH', value: 'YUANJING-70B-MATH', description: '中国联通元景大模型（70B），数学推理专用' },
-  { label: 'YUANJING-70B-NL2SQL', value: 'YUANJING-70B-NL2SQL', description: '中国联通元景大模型（70B），自然语言转SQL专用' },
-  { label: 'LLAMA-4-SCOUT-17B-16E-INSTRUCT', value: 'LLAMA-4-SCOUT-17B-16E-INSTRUCT', description: 'Meta研发的Llama模型（17B），指令理解任务' },
-  { label: 'LLAMA-4-MAVERICK-17B-128E-INSTRUCT', value: 'LLAMA-4-MAVERICK-17B-128E-INSTRUCT', description: 'Meta研发的Llama模型（17B），扩展指令理解' },
-  { label: 'GLM-Z1-32B-0414', value: 'GLM-Z1-32B-0414', description: '智谱AI研发的GLM模型（32B），多模态任务支持' },
-  { label: 'GLM-Z1-RUMINATION-32B-0414', value: 'GLM-Z1-RUMINATION-32B-0414', description: '智谱AI研发的GLM模型（32B），深度推理优化' },
-])
-function changeModel(model: any) {
-  const newModel = model.toLowerCase()
-  if (newModel === curModel.value) {
-    return
-  }
-  paging.value!.addChatRecordData({
-    id: UUID(),
-    role: 'info',
-    content: `模型由 ${curModel.value} 切换为 ${newModel}`,
-  })
-  curModel.value = newModel
-}
-
 const loading = ref(false)
-const conversationId = ref('')
+// TODO: 增加上下文记忆
+// const session_id = ref('')
 const chatList = ref<ChatMessage[]>([])
 
 // #ifdef H5 || APP-PLUS
@@ -105,146 +58,105 @@ async function send(question: string) {
     content: question,
   })
 
-  const userInfoStore = useUserInfoStore()
-
-  if (conversationId.value === '') {
-    // 创建新会话
-    const response = await un.post(import.meta.env.VITE_CONVERSATION_CREATE_URL, {
-      assistantId: '3ecf4dd0-62c8-48ae-a257-8ca1558c607a',
-      prompt: question,
-      from: 'ChatUnicom',
-      iconColor: '#D9E3C3',
-      model: curModel.value,
-      useSearch: true,
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${userInfoStore.userInfo?.token}`,
-      },
-    })
-    conversationId.value = (response.data as any).data.conversationId
-  }
-
-  // #ifdef MP-WEIXIN
-  answer(question)
-  // #endif
-
   // #ifdef H5 || APP-PLUS
   SSEClientAppRef.value.start({
-    url: 'https://maas.ai-yuanjing.com/use/model/api/app/v1/chatunicom/stream',
+    url: '/api/openapi/v3/assistant/chat/completions',
     method: 'POST',
     body: {
+      agent_id: '1df55e77-d22b-4f86-83c8-28916bc5e3ee',
       input: question,
-      model: curModel.value,
-      stream: true,
-      auto_citation: false,
-      conversationId: conversationId.value,
-      use_lvm: true,
-      use_code: true,
-      use_speech: true,
-      use_search: true,
-      assistantId: '3ecf4dd0-62c8-48ae-a257-8ca1558c607a',
-      extend_params: {},
-      need_search_list: true,
-      request_id: UUID(),
+      session_id: UUID(),
     },
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${userInfoStore.userInfo?.token}`,
+      'Authorization': `Bearer sk-31e3f5f74dbe435d8a1e4d04a7505669`,
     },
   })
   // #endif
 }
 
-// #ifdef MP-WEIXIN
-const controller = ref<AbortController>(new AbortController())
-const signal = ref(controller.value.signal)
-async function answer(content: string) {
-  loading.value = true
-  paging.value!.addChatRecordData({
-    id: UUID(),
-    role: 'assistant',
-    content: '',
-  })
-
-  const userInfoStore = useUserInfoStore()
-  const client = new YuanJingAI({
-    baseUrl: `https://maas.ai-yuanjing.com/use/model/api/app/v1/`,
-    apiKey: userInfoStore.userInfo?.token,
-  })
-
-  await client.Completion({
-    input: content,
-    model: curModel.value,
-    stream: true,
-    auto_citation: false,
-    conversationId: conversationId.value,
-    use_lvm: true,
-    use_code: true,
-    use_speech: true,
-    use_search: true,
-    assistantId: '3ecf4dd0-62c8-48ae-a257-8ca1558c607a',
-    extend_params: {},
-    need_search_list: true,
-    request_id: UUID(),
-  }, controller.value.signal, async (responseText: string) => {
-    if (loading.value === false) {
-      return
-    }
-    const lines = responseText.split(/\r?\n/)
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i]
-      const data = line.startsWith('data:') ? line.slice(5).trim() : line.trim()
-      if (data === '[DONE]') {
-        console.warn('request done')
-        // 重置AbortController实例
-        controller.value = new AbortController()
-        signal.value = controller.value.signal
-      }
-      else {
-        const choices = JSON.parse(data)
-        chatList.value[0].content += choices.response || ''
-        if (choices.finish_reason === 'stop' || choices.finish === 1) {
-          loading.value = false
-          // 重置AbortController实例
-          controller.value = new AbortController()
-          signal.value = controller.value.signal
-        }
-      }
-    }
-  }).catch((error) => {
-    console.error('Fetch error:', error)
-    chatList.value[0].content += '<div class="text-red">网络错误，请稍后重试~</div>'
-  }).finally(() => {
-    loading.value = false
-    // 重置AbortController实例
-    controller.value = new AbortController()
-    signal.value = controller.value.signal
-  })
-}
-
-signal.value.addEventListener('abort', () => {
-  console.error('aborted!')
-  // 重置AbortController实例
-  controller.value = new AbortController()
-  signal.value = controller.value.signal
-})
-// #endif
-
 function cancel() {
-  // #ifdef MP-WEIXIN
-  console.warn('cancel')
-  controller.value.abort()
-  loading.value = false
-  // 重置AbortController实例
-  controller.value = new AbortController()
-  signal.value = controller.value.signal
-  // #endif
-
   // #ifdef H5 || APP-PLUS
   console.warn('cancel')
   SSEClientAppRef.value.stop()
   // #endif
+}
+
+// 推荐问题数据
+const allQuestions = [
+  { id: '1', title: '黄梅三日精品旅游路线', answer: `` },
+  { id: '2', title: '黄冈的特色美食有哪些？', answer: `` },
+  { id: '3', title: '黄冈的特色美食有哪些？', answer: `` },
+  { id: '4', title: '黄冈的历史文化介绍', answer: `` },
+  { id: '5', title: '黄梅自驾游线路规划', answer: `` },
+  // { id: '6', title: '黄冈的交通指南', answer: `` },
+  // { id: '7', title: '黄冈的住宿推荐', answer: `` },
+  // { id: '8', title: '黄冈的天气情况', answer: `` },
+  // { id: '9', title: '黄冈的民俗文化', answer: `` },
+]
+
+// 当前显示的问题列表，默认显示4个问题
+const questionData = ref<QuestionItem[]>([])
+
+// 初始化问题列表
+onMounted(async () => {
+  refreshQuestion()
+})
+
+// 刷新推荐问题
+function refreshQuestion() {
+  const shuffled = [...allQuestions].sort(() => 0.5 - Math.random())
+  questionData.value = shuffled.slice(0, 4)
+}
+
+// 提交用户点击的问题
+function questionSubmit(item: QuestionItem) {
+  if (item && item.title) {
+    if (item.answer) {
+      // 添加用户问题
+      paging.value!.addChatRecordData({
+        id: UUID(),
+        role: 'user',
+        content: item.title,
+      })
+
+      // 添加空的助手回复，然后模拟流式输出
+      loading.value = true
+      paging.value!.addChatRecordData({
+        id: UUID(),
+        role: 'assistant',
+        content: '',
+      })
+
+      // 模拟流式输出
+      simulateStreamResponse(item.answer)
+    }
+    else {
+      send(item.title)
+    }
+  }
+}
+
+// 模拟流式输出效果
+function simulateStreamResponse(answer: string) {
+  const chunkSize = 1 // 每次添加的字符数
+  const delay = 20 // 每次添加的延迟时间(毫秒)
+  let currentIndex = 0
+
+  const outputInterval = setInterval(() => {
+    if (currentIndex >= answer.length) {
+      clearInterval(outputInterval)
+      loading.value = false
+      return
+    }
+
+    // 获取当前要添加的文本块
+    const nextChunk = answer.substring(currentIndex, currentIndex + chunkSize)
+    currentIndex += chunkSize
+
+    // 更新聊天内容
+    chatList.value[0].content += nextChunk
+  }, delay)
 }
 </script>
 
@@ -259,7 +171,7 @@ function cancel() {
     <!-- z-paging默认铺满全屏，此时页面所有view都应放在z-paging标签内，否则会被盖住 -->
     <!-- 需要固定在页面顶部的view请通过slot="top"插入，包括自定义的导航栏 -->
     <template #top>
-      <ChatUINavbar title="联通元景" />
+      <ChatUINavbar title="东坡先生" />
     </template>
     <!-- for循环渲染聊天记录列表 -->
     <view v-for="item in chatList" :key="item.id" style="position: relative;">
@@ -272,40 +184,38 @@ function cancel() {
         <ChatUIContent :message="item" />
       </view>
     </view>
+    <!-- 默认智能助手图标 -->
+    <div class="mx-4 my-8 flex flex-row" style="transform: scaleY(-1);">
+      <sar-avatar src="https://app.ihuanggang.cn/h5pages/iHgApp/intelligentAssistant/images/service.png" />
+      <!-- 默认推荐 -->
+      <sar-card style="background:rgba(120,78,35,0.06)" class="ml-4 w-60 flex-1 rounded-lg">
+        <div class="mb-3 flex items-center justify-between">
+          <div class="text-xs">
+            我是东坡先生，您可以试着问我：
+          </div>
+          <div class="flex cursor-pointer items-center text-xs text-[#999]" @tap="refreshQuestion()">
+            <view i-carbon-update-now />
+            <span>换一换</span>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div
+            v-for="item in questionData"
+            :key="item.id"
+            class="cursor-pointer rounded bg-white bg-opacity-70 p-2 text-xs text-[#333] transition-all hover:bg-opacity-100"
+            @tap="questionSubmit(item)"
+          >
+            {{ item.title }}
+          </div>
+        </div>
+      </sar-card>
+    </div>
     <template #bottom>
-      <!-- #ifdef MP-WEIXIN -->
-      <ChatUISender :loading="loading" @send="send" @cancel="cancel">
-        <template #options>
-          <sar-button type="outline" round inline size="mini" @click="modelSelectVisible = true">
-            <text>
-              {{ curModel }}
-            </text>
-            <text i-carbon-caret-down />
-          </sar-button>
-        </template>
-      </ChatUISender>
-      <!-- #endif -->
-
       <!-- #ifdef H5 || APP-PLUS -->
-      <ChatUISender :loading="loading" @send="send" @cancel="cancel">
-        <template #options>
-          <sar-button type="outline" round inline size="mini" @click="modelSelectVisible = true">
-            <text>
-              {{ curModel }}
-            </text>
-            <text i-carbon-caret-down />
-          </sar-button>
-        </template>
-      </ChatUISender>
+      <ChatUISender :loading="loading" @send="send" @cancel="cancel" />
       <!-- #endif -->
-      <sar-tabbar-pit />
     </template>
   </z-paging>
-
-  <sar-picker-popout
-    v-model:visible="modelSelectVisible" title="请选择您需要使用的模型" :columns="modelList"
-    @change="changeModel"
-  />
 </template>
 
 <style lang="scss" scoped>
@@ -315,7 +225,5 @@ function cancel() {
 </style>
 
 <route type="home" lang="json5">
-{
-  "layout": "tabbar"
-}
+{}
 </route>
