@@ -24,12 +24,12 @@ function onCancelClick() {
   <view>
     <view class="m-4 flex flex-row items-end rounded-xl bg-[--sar-secondary-bg] px-4 py-2">
       <view class="m-[-1rem] w-20 flex flex-row items-end justify-center py-2">
-        <img src="https://app.ihuanggang.cn/h5pages/iHgApp/intelligentAssistant/images/robot.png" class="w-full">
+        <img src="@img/images/live2d.png" class="w-full">
       </view>
       <view class="flex-1">
         <textarea
           v-model="message"
-          placeholder="我是东坡先生，你有什么出行计划需要我帮您规划吗？"
+          placeholder="我是小俏，有什么需要我帮您的吗？"
           :maxlength="-1"
           class="h-20 w-auto"
         />

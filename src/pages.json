@@ -21,5 +21,6 @@
     "navigationBarTitleText": "联通元景",
     "navigationStyle": "custom"
   },
+  "__esModule": true,
   "subPackages": []
 }
