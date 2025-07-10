@@ -47,6 +47,7 @@ declare global {
   const getLastPage: typeof import('./utils/pages')['getLastPage']
   const getWindowInfo: typeof import('./utils/uni')['getWindowInfo']
   const h: typeof import('vue')['h']
+  const icu: typeof import('./utils/icu')['default']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
@@ -399,6 +400,7 @@ declare module 'vue' {
     readonly getLastPage: UnwrapRef<typeof import('./utils/pages')['getLastPage']>
     readonly getWindowInfo: UnwrapRef<typeof import('./utils/uni')['getWindowInfo']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
+    readonly icu: UnwrapRef<typeof import('./utils/icu')['default']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>

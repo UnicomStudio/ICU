@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 interface ChatMessage {
   content: string
+  reasoning?: string
   role?: 'assistant' | 'system' | 'error' | 'info' | 'user'
   showCodeLine?: boolean
 }
@@ -11,6 +12,7 @@ const props = withDefaults(defineProps<{
 }>(), {
 // 为了解决类型错误，给默认值添加 content 属性
   message: () => ({
+    reasoning: '',
     content: '',
     role: 'assistant',
     showCodeLine: false,
@@ -23,6 +25,7 @@ const { message } = props
   <block v-if="message.role === 'assistant' || message.role === 'system' || message.role === 'error'">
     <view class="mx-4 my-2 flex items-center justify-start">
       <view class="w-auto rounded-xl bg-[--sar-secondary-bg] px-4 py-2">
+        <ChatUIThinking v-if="message.reasoning" :collapsed="false" :reasoning="message.reasoning" />
         <MarkedParser :content="message.content" :show-code-line="message.showCodeLine" :class="[message.role === 'error' ? 'text-red' : '']" />
       </view>
     </view>

@@ -71,6 +71,7 @@
     "iconify",
     "itemclick",
     "kuaishou",
+    "linkify",
     "miniprogram",
     "persistedstate",
     "pinia",
