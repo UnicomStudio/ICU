@@ -391,159 +391,6 @@ function simulateStreamResponse(answer: string) {
     chatList.value[0].content += nextChunk
   }, delay)
 }
-
-const templateHTML = `
-  <div class="max-w-4xl mx-auto p-4 font-sans">
-    <!-- 行程标题区 -->
-    <div class="text-center mb-8">
-      <h1 class="text-2xl md:text-3xl font-bold text-gray-800">黄梅三日精品游</h1>
-      <div class="text-gray-600 mt-2">
-        📅2023年12月20日 - 12月22日 (3天)
-        <br>
-        🌤️天气：多云转晴，适合游玩
-      </div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-      <div class="bg-white p-4 rounded-lg shadow-md">
-        <h3 class="font-semibold text-gray-800 mb-2">第一天</h3>
-        <p class="text-gray-600 mb-3">探访禅宗祖庭<br>感受禅意生活</p>
-        <div class="aspect-w-16 aspect-h-9">
-          <img src="https://www.tja.gov.cn/group2/M00/03/DB/rB40zWYwpE2APe7RAAt4MkRq-uI023.png"
-               alt="五祖寺" class="w-full h-full object-cover rounded">
-        </div>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md">
-        <h3 class="font-semibold text-gray-800 mb-2">第二天</h3>
-        <p class="text-gray-600 mb-3">黄梅戏发源地<br>非遗文化体验</p>
-        <div class="aspect-w-16 aspect-h-9">
-          <img src="https://www.tja.gov.cn/group2/M00/03/DB/rB40zWYwpE2APe7RAAt4MkRq-uI023.png"
-               alt="五祖寺" class="w-full h-full object-cover rounded">
-        </div>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow-md">
-        <h3 class="font-semibold text-gray-800 mb-2">第三天</h3>
-        <p class="text-gray-600 mb-3">禅茶文化体验<br>湿地生态探访</p>
-        <div class="aspect-w-16 aspect-h-9">
-          <img src="https://www.tja.gov.cn/group2/M00/03/DB/rB40zWYwpE2APe7RAAt4MkRq-uI023.png"
-               alt="五祖寺" class="w-full h-full object-cover rounded">
-        </div>
-      </div>
-      <div class="bg-white p-5 rounded-lg shadow-md">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">交通信息</h2>
-        <div class="flex items-center mb-3">
-          <i class="fas fa-train text-blue-500 text-lg mr-3"></i>
-          <span>火车：黄梅站（距景区15分钟车程）</span>
-        </div>
-        <div class="flex items-center">
-          <i class="fas fa-bus text-blue-500 text-lg mr-3"></i>
-          <span>公交：旅游专线1路、2路直达景区</span>
-        </div>
-      </div>
-      <div class="bg-white p-5 rounded-lg shadow-md">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">住宿推荐</h2>
-        <div class="mb-4">
-          <div class="flex items-center">
-            <i class="fas fa-hotel text-green-500 text-lg mr-3"></i>
-            <span class="font-medium">维也纳国际酒店(黄冈师范学院店)</span>
-          </div>
-          <p class="text-gray-600 text-sm mt-1 pl-8">舒适型酒店 | 最低¥198起 | 0713-7819666</p>
-        </div>
-      </div>
-      <div class="bg-white p-5 rounded-lg shadow-md">
-        <h3 class="font-medium text-gray-700 mb-2">特色餐厅</h3>
-        <div class="grid grid-cols-2 gap-2">
-          <div class="bg-gray-100 p-2 rounded flex items-center">
-            <i class="fas fa-utensils text-yellow-500 mr-2"></i>
-            <span>禅意素斋馆</span>
-          </div>
-          <div class="bg-gray-100 p-2 rounded flex items-center">
-            <i class="fas fa-mug-hot text-yellow-500 mr-2"></i>
-            <span>稻田咖啡馆</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white p-5 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">实用信息</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <h3 class="font-medium text-gray-700 mb-2 flex items-center">
-            <i class="fas fa-phone-alt text-red-500 mr-2"></i>紧急联系
-          </h3>
-          <p class="text-gray-600">报警: 110</p>
-          <p class="text-gray-600">急救: 120</p>
-          <p class="text-gray-600">旅游投诉: 12301</p>
-        </div>
-        <div>
-          <h3 class="font-medium text-gray-700 mb-2 flex items-center">
-            <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>注意事项
-          </h3>
-          <p class="text-gray-600 flex items-start mb-1">
-            <i class="fas fa-circle text-xs text-gray-400 mr-2 mt-1"></i>
-            寺庙区域请保持安静，尊重宗教习俗
-          </p>
-          <p class="text-gray-600 flex items-start">
-            <i class="fas fa-circle text-xs text-gray-400 mr-2 mt-1"></i>
-            山区气候多变，建议携带雨具和外套
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="mb-8">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">详细行程安排</h2>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm border-collapse">
-          <thead>
-            <tr class="bg-gray-100">
-              <th class="p-3 text-left">时间</th>
-              <th class="p-3 text-left">地点</th>
-              <th class="p-3 text-left">活动</th>
-              <th class="p-3 text-left">备注</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-gray-200">
-              <td class="p-3">
-                <i class="far fa-clock text-gray-500 mr-2"></i>08:00
-              </td>
-              <td class="p-3">
-                <i class="fas fa-map-marker-alt text-gray-500 mr-2"></i>黄梅站
-              </td>
-              <td class="p-3">
-                <i class="fas fa-train text-gray-500 mr-2"></i>抵达黄梅
-              </td>
-              <td class="p-3">开始美好旅程</td>
-            </tr>
-            <tr class="border-b border-gray-200">
-              <td class="p-3">
-                <i class="far fa-clock text-gray-500 mr-2"></i>09:30
-              </td>
-              <td class="p-3">
-                <i class="fas fa-map-marker-alt text-gray-500 mr-2"></i>五祖寺
-              </td>
-              <td class="p-3">
-                <i class="fas fa-torii-gate text-gray-500 mr-2"></i>禅宗祖庭参访
-              </td>
-              <td class="p-3">品尝禅宗素斋</td>
-            </tr>
-            <tr class="border-b border-gray-200">
-              <td class="p-3">
-                <i class="far fa-clock text-gray-500 mr-2"></i>14:00
-              </td>
-              <td class="p-3">
-                <i class="fas fa-map-marker-alt text-gray-500 mr-2"></i>四祖寺
-              </td>
-              <td class="p-3">
-                <i class="fas fa-yin-yang text-gray-500 mr-2"></i>禅修体验
-              </td>
-              <td class="p-3">双石塔、古井景点</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-`
 </script>
 
 <template>
@@ -555,7 +402,7 @@ const templateHTML = `
     <!-- z-paging默认铺满全屏，此时页面所有view都应放在z-paging标签内，否则会被盖住 -->
     <!-- 需要固定在页面顶部的view请通过slot="top"插入，包括自定义的导航栏 -->
     <template #top>
-      <ChatUINavbar title="东坡先生" />
+      <ChatUINavbar title="红小兵" />
     </template>
     <!-- for循环渲染聊天记录列表 -->
     <view v-for="item in chatList" :key="item.id" style="position: relative;">
@@ -569,13 +416,13 @@ const templateHTML = `
       </view>
     </view>
     <!-- 默认智能助手图标 -->
-    <div class="mx-4 my-8 flex flex-row" style="transform: scaleY(-1);">
-      <sar-avatar src="https://app.ihuanggang.cn/h5pages/iHgApp/intelligentAssistant/images/service.png" />
+    <div v-if="chatList.length === 0" class="mx-4 my-8 flex flex-row" style="transform: scaleY(-1);">
+      <img src="@img/images/live2d.png" class="h-36 w-20">
       <!-- 默认推荐 -->
       <sar-card style="background:rgba(120,78,35,0.06)" class="ml-4 w-60 flex-1 rounded-lg">
         <div class="mb-3 flex items-center justify-between">
           <div class="text-xs">
-            我是东坡先生，您可以试着问我：
+            我是红小兵，您可以试着问我：
           </div>
           <div class="flex cursor-pointer items-center text-xs text-[#999]" @tap="refreshQuestion()">
             <view i-carbon-update-now />
@@ -594,10 +441,6 @@ const templateHTML = `
         </div>
       </sar-card>
     </div>
-    <MarkedParser
-      style="transform: scaleY(-1);"
-      :content="templateHTML"
-    />
     <template #bottom>
       <ChatUISender :loading="loading" @send="send" @cancel="cancel" />
       <sar-tabbar-pit />

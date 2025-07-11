@@ -32,14 +32,18 @@ function onCancelClick() {
         type="textarea"
         show-count
         :maxlength="1000"
-        placeholder="有问题，尽管问，shift+enter换行"
+        placeholder="我是红小兵，你有什么出行计划需要我帮您规划吗？"
         min-height="5rem"
         class="mt-2"
         confirm-type="send"
         clearable
         show-clear-only-focus
         @confirm="onSendClick"
-      />
+      >
+        <template #prepend>
+          <img src="@img/images/live2d.png" class="w-12">
+        </template>
+      </sar-input>
       <view class="mt-2 flex flex-row gap-4">
         <view class="flex items-center gap-4">
           <slot name="options" />
