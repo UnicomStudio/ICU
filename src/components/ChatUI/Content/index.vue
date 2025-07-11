@@ -1,22 +1,16 @@
 <script lang="ts" setup>
-interface ChatMessage {
-  content: string
-  reasoning?: string
-  role?: 'assistant' | 'system' | 'error' | 'info' | 'user'
-  showCodeLine?: boolean
-}
-
 // 合并为单个message字典参数
 const props = withDefaults(defineProps<{
   message: ChatMessage
 }>(), {
 // 为了解决类型错误，给默认值添加 content 属性
-  message: () => ({
+  message: {
+    role: 'assistant',
+    message: '',
     reasoning: '',
     content: '',
-    role: 'assistant',
     showCodeLine: false,
-  }),
+  },
 })
 const { message } = props
 </script>
