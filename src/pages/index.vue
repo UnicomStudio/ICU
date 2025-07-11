@@ -96,7 +96,7 @@ const allQuestions = [
 ]
 
 // 当前显示的问题列表，默认显示4个问题
-const questionData = ref<QuestionItem[]>([])
+const questionData = ref<any[]>([])
 
 // 初始化问题列表
 onMounted(async () => {
@@ -110,7 +110,7 @@ function refreshQuestion() {
 }
 
 // 提交用户点击的问题
-function questionSubmit(item: QuestionItem) {
+function questionSubmit(item: any) {
   if (item && item.title) {
     if (item.answer) {
       // 添加用户问题
