@@ -39,6 +39,7 @@ declare global {
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const fetchSSE: typeof import('./utils/stream')['fetchSSE']
+  const formatChatHistoryForAPI: typeof import('./utils/icu')['formatChatHistoryForAPI']
   const getActivePinia: typeof import('pinia')['getActivePinia']
   const getCaptcha: typeof import('./utils/sys')['getCaptcha']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
@@ -47,6 +48,7 @@ declare global {
   const getLastPage: typeof import('./utils/pages')['getLastPage']
   const getWindowInfo: typeof import('./utils/uni')['getWindowInfo']
   const h: typeof import('vue')['h']
+  const icu: typeof import('./utils/icu')['default']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
@@ -108,6 +110,7 @@ declare global {
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
   const onWatcherCleanup: typeof import('vue')['onWatcherCleanup']
+  const parseReasoning: typeof import('./utils/icu')['parseReasoning']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const provide: typeof import('vue')['provide']
   const provideLocal: typeof import('@vueuse/core')['provideLocal']
@@ -391,6 +394,7 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly formatChatHistoryForAPI: UnwrapRef<typeof import('./utils/icu')['formatChatHistoryForAPI']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
     readonly getCaptcha: UnwrapRef<typeof import('./utils/sys')['getCaptcha']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
@@ -399,6 +403,7 @@ declare module 'vue' {
     readonly getLastPage: UnwrapRef<typeof import('./utils/pages')['getLastPage']>
     readonly getWindowInfo: UnwrapRef<typeof import('./utils/uni')['getWindowInfo']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
+    readonly icu: UnwrapRef<typeof import('./utils/icu')['default']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
@@ -460,6 +465,7 @@ declare module 'vue' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
+    readonly parseReasoning: UnwrapRef<typeof import('./utils/icu')['parseReasoning']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>

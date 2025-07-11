@@ -57,7 +57,7 @@ const marked = new MarkdownIt({
     copyCodeData.push(code)
 
     let codeHTML = `<div class="code-block">`
-    codeHTML += `<div style="color: #aaa;font-size: 12px;padding:8px; background-color: #282c34; border: 1px solid #282c34; border-radius: 6px 6px 0 0; display: flex; flex-direction: row;">`
+    codeHTML += `<div style="color: #aaa;padding:8px; background-color: #282c34; border: 1px solid #282c34; border-radius: 6px 6px 0 0; display: flex; flex-direction: row;">`
     // 显示代码语言及复制按钮，复制按钮绑定 code-data-index 方便查找对应代码
     codeHTML += `<span style="color:#e6c07b;margin-left: 8px; flex: 1;">${lang}</span>`
     codeHTML += `</div>`
@@ -69,10 +69,9 @@ const marked = new MarkdownIt({
 })
 
 const parsedContent = computed(() => {
-  // TODO: 处理 <think>
-  const value = props.content.replace(/<think>|<think\/>|<think \/>|<\/think>|<\/ think>/g, '# ')
   try {
-    return marked.render(value) as any
+    console.warn('Markdown内容:', marked.parse(props.content))
+    return marked.render(props.content) as any
   }
   catch (e) {
     console.error('Markdown解析错误:', e)
@@ -118,7 +117,6 @@ function handleItemClick(e: any) {
 
 <style lang="scss" scoped>
 .chat-content {
-  font-size: 14px;
   line-height: 1.5;
   word-break: break-all;
 
@@ -146,36 +144,6 @@ function handleItemClick(e: any) {
     margin-top: 10px;
   }
 
-  .h1,
-  h1 {
-    font-size: 36px;
-  }
-
-  .h2,
-  h2 {
-    font-size: 30px;
-  }
-
-  .h3,
-  h3 {
-    font-size: 24px;
-  }
-
-  .h4,
-  h4 {
-    font-size: 18px;
-  }
-
-  .h5,
-  h5 {
-    font-size: 14px;
-  }
-
-  .h6,
-  h6 {
-    font-size: 12px;
-  }
-
   a {
     background-color: transparent;
     color: #2196f3;
@@ -187,7 +155,7 @@ function handleItemClick(e: any) {
     margin-top: 20px;
     margin-bottom: 20px;
     border: 0;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid grey;
   }
 
   img {
@@ -259,7 +227,6 @@ function handleItemClick(e: any) {
 
   code:not(.hljs) {
     padding: 2px 4px;
-    font-size: 90%;
     color: #c7254e;
     background-color: #ffe7ee;
     border-radius: 4px;
@@ -273,11 +240,6 @@ function handleItemClick(e: any) {
     color: var(--vg__text-1);
     border-radius: 16px;
     background: var(--vg__bg-1);
-    font-size: 12px;
-  }
-
-  .markdown-wrap {
-    font-size: 12px;
   }
 
   pre.code-block-wrapper {
@@ -291,14 +253,12 @@ function handleItemClick(e: any) {
 
   pre.code-block-wrapper code {
     padding: auto;
-    font-size: inherit;
     color: inherit;
     background-color: inherit;
     border-radius: 0;
   }
 
   .code-block-header__copy {
-    font-size: 16px;
     margin-left: 5px;
   }
 
@@ -311,7 +271,6 @@ function handleItemClick(e: any) {
   blockquote {
     padding: 10px 20px;
     margin: 0 0 20px;
-    font-size: 17.5px;
     border-left: 5px solid #e5e5e5;
   }
 
@@ -325,7 +284,6 @@ function handleItemClick(e: any) {
   blockquote footer,
   blockquote small {
     display: block;
-    font-size: 80%;
     line-height: 1.42857143;
     color: #777;
   }
@@ -406,7 +364,6 @@ function handleItemClick(e: any) {
     z-index: 3;
     top: 0.8em;
     right: 1em;
-    font-size: 0.8em;
     color: #999;
   }
 

@@ -15,7 +15,7 @@ declare module 'vue' {
     ICUTabbar: typeof import('./components/ICU/Tabbar.vue')['default']
     MarkedParser: typeof import('./components/MarkedParser/index.vue')['default']
     SSEClient: typeof import('./components/SSEClient/index.vue')['default']
-    SSEClientApp: typeof import('./components/SSEClient/App.vue')['default']
+    SSEClientApp: typeof import('./components/SSEClient/app.vue')['default']
     SSEClientWechat: typeof import('./components/SSEClient/wechat.vue')['default']
   }
 }
