@@ -83,7 +83,9 @@
         "showTipsWithoutWifi": true,
         "allowDownloadWithoutWiFi": false
       }
-    }
+    },
+    "darkmode": true,
+    "themeLocation": "theme.json"
   },
   "quickapp": {},
   "mp-weixin": {

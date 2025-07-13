@@ -101,6 +101,8 @@ export default defineManifestConfig({
         },
       },
     },
+    darkmode: true,
+    themeLocation: 'theme.json',
   },
   /* 快应用特有相关 */
   'quickapp': {},

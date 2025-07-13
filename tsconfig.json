@@ -15,7 +15,9 @@
       "miniprogram-api-typings",
       "@uni-helper/uni-types",
       "z-paging/types",
-      "sard-uniapp/global"
+      "sard-uniapp/global",
+      "@types/markdown-it",
+      "./src/typings.d.ts"
     ],
     "allowJs": true,
     "downlevelIteration": true, // 是否将 for...of 循环编译为适用于旧版 JavaScript 的代码

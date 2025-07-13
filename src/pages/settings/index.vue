@@ -4,10 +4,9 @@ const apiKey = ref('您还没有设置API Key')
 const appId = ref('您还没有设置App ID')
 
 onMounted(() => {
-  const userInfoStore = useUserInfoStore()
-  nickname.value = userInfoStore.userInfo?.nickname || 'easterNday'
-  apiKey.value = userInfoStore.userInfo?.apiKey || '您还没有设置API Key'
-  appId.value = userInfoStore.userInfo?.appId || '您还没有设置App ID'
+  nickname.value = 'easterNday'
+  apiKey.value = '您还没有设置API Key'
+  appId.value = '您还没有设置App ID'
 })
 </script>
 
