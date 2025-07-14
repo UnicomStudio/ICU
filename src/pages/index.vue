@@ -94,11 +94,15 @@ async function send(question: string) {
   paging.value!.addChatRecordData({
     id: UUID(),
     role: 'user',
+    message: '',
+    reasoning: '',
     content: question,
   })
   paging.value!.addChatRecordData({
     id: UUID(),
     role: 'assistant',
+    message: '',
+    reasoning: '',
     content: '',
   })
 
