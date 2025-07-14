@@ -54,9 +54,7 @@ function onSSEClientError(event: any) {
 
 function onSSEClientMessage(event: any) {
   const choices = JSON.parse(event.data)
-  for (const choice of choices.choices) {
-    chatList.value[0].message += choice.delta.content || ''
-  }
+  chatList.value[0].message += choices.response || ''
   parseReasoning(chatList.value[0].message).map((e: { type: string, content: string }) => {
     if (e.type === 'reasoning' && e.content) {
       chatList.value[0].reasoning = e.content || ''
@@ -106,15 +104,9 @@ async function send(question: string) {
     url: import.meta.env.VITE_CHAT_COMPLETION_URL,
     method: 'POST',
     body: {
-      model: 'deepseek-r1-distill-llama-70b',
+      agent_id: 'aba4fbfc-fb90-4dd3-a543-674e1e3ca4d2',
+      input: question,
       stream: true,
-      messages: [
-        ...formatChatHistoryForAPI(chatList.value),
-        {
-          role: 'user',
-          content: question,
-        },
-      ],
     },
     headers: {
       'Content-Type': 'application/json',
